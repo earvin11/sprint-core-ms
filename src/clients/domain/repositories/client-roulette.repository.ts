@@ -1,6 +1,5 @@
 import {
   ClientRouletteEntity,
-  findClientsRoulettes,
 } from '../entities/client-roulette.entity';
 
 export abstract class ClientRouletteRepository {
@@ -27,8 +26,8 @@ export abstract class ClientRouletteRepository {
     data: Partial<ClientRouletteEntity>,
   ): Promise<ClientRouletteEntity | null>;
   abstract remove(id: string): Promise<ClientRouletteEntity | null>;
-  abstract findClientsRoulettes(
-    id: string,
-  ): Promise<findClientsRoulettes[] | []>;
+  // abstract findClientsRoulettes(
+  //   id: string,
+  // ): Promise<findClientsRoulettes[] | []>;
   // abstract findWithCrupier(operatorId: string, currencyId?: string): Promise<WithCrupierResp[] | []>;
 }
