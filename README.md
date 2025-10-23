@@ -4,7 +4,7 @@
 
 ## Description
 
-Este servicio contiene un cascaron para futuros proyectos de servicios de SprintGamming.
+Este servicio contiene logica de negocio de SprintGamming.
 
 ## Project setup
 
@@ -40,4 +40,4 @@ $ npm run test:cov
 
 ## Development 
 
-Proyecto desarrollado con NestJS, arquitectura en capas.# boilerplate-services-sprint
+Proyecto desarrollado con NestJS, arquitectura en capas.
