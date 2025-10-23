@@ -3,6 +3,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Client, ClientSchema } from './models/client.model';
 import { RedisModule } from 'src/redis/infraestructure/redis.module';
 import { LoggerModule } from 'src/logging/infraestructure/logger.module';
+import { ClientMongoRepository } from './repositories/client.mongo-repository';
+import { ClientRepository } from '../domain/repositories/client.repository';
 
 @Module({
   imports: [
@@ -14,6 +16,13 @@ import { LoggerModule } from 'src/logging/infraestructure/logger.module';
     ]),
     LoggerModule,
     RedisModule,
+  ],
+  providers: [
+    ClientMongoRepository,
+    {
+      provide: ClientRepository,
+      useExisting: ClientMongoRepository,
+    },
   ],
 })
 export class ClientModule {}
