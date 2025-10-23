@@ -3,6 +3,10 @@ import * as joi from 'joi';
 
 interface EnvVars {
   PORT: number;
+
+  DB_URI: string;
+  DB_NAME: string;
+
   REDIS_HOST: string;
   REDIS_PORT: number;
   REDIS_PASSWORD: string;
@@ -15,6 +19,10 @@ interface EnvVars {
 const evnsSchema = joi
   .object({
     PORT: joi.number().required(),
+
+    DB_URI: joi.string().required(),
+    DB_NAME: joi.string().required(),
+
     REDIS_HOST: joi.string().required(),
     REDIS_PORT: joi.string().required(),
     REDIS_PASSWORD: joi.string().required(),
@@ -35,6 +43,10 @@ const envVars: EnvVars = value;
 
 export const envs = {
   port: envVars.PORT,
+
+  dbUri: envVars.DB_URI,
+  dbName: envVars.DB_NAME,
+
   redisHost: envVars.REDIS_HOST,
   redisPort: envVars.REDIS_PORT,
   redisPassword: envVars.REDIS_PASSWORD,
