@@ -6,6 +6,7 @@ import { BullModule } from '@nestjs/bullmq';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ClientModule } from './clients/infraestructure/client.module';
 import { CurrencyModule } from './currencies/infraestructure/currency.module';
+import { CrupierModule } from './crupiers/infraestructure/crupier.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { CurrencyModule } from './currencies/infraestructure/currency.module';
       },
     }),
     ClientModule,
+    CrupierModule,
     CurrencyModule,
     RedisModule,
   ],
