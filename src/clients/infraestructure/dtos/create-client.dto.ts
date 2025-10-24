@@ -1,36 +1,33 @@
-// import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString, MinLength } from 'class-validator';
+import { IsBoolean, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class CreateClientDto {
-  //   @ApiProperty()
   @IsString()
   @MinLength(3)
   name: string;
 
-  //   @ApiProperty()
   @IsString()
   @MinLength(3)
   endpointAuth: string;
 
-  //   @ApiProperty()
   @IsString()
   endpointRollback: string;
 
-  //   @ApiProperty()
   @IsString()
   endpointBet: string;
 
-  //   @ApiProperty()
   @IsString()
   endpointWin: string;
 
-  //   @ApiProperty()
   @IsString()
-  @IsOptional()
-  logo?: string;
+  logo: string; // ahora obligatorio, según la entidad
 
-  //   @ApiProperty()
   @IsString()
+  loaderLogo: string; // ahora obligatorio
+
+  @IsString()
+  urlGames: string; // nuevo campo requerido
+
+  @IsBoolean()
   @IsOptional()
-  loaderLogo?: string;
+  useLogo?: boolean; // opcional, pero tipado como booleano
 }

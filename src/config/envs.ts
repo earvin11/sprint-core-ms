@@ -14,6 +14,7 @@ interface EnvVars {
   SEQ_URL: string;
   SEQ_API_KEY: string;
   SEQ_WORK_SPACE: string;
+  NODE_ENV: 'development' | 'production' | 'test';
 }
 
 const evnsSchema = joi
@@ -30,6 +31,7 @@ const evnsSchema = joi
     SEQ_URL: joi.string(),
     SEQ_API_KEY: joi.string(),
     SEQ_WORK_SPACE: joi.string(),
+    NODE_ENV: joi.string().valid('development', 'production', 'test').required(),
   })
   .unknown(true);
 
@@ -56,4 +58,5 @@ export const envs = {
   seqUrl: envVars.SEQ_URL,
   seqApiKey: envVars.SEQ_API_KEY,
   seqWorkSpace: envVars.SEQ_WORK_SPACE,
+  NODE_ENV: process.env.NODE_ENV,
 };
