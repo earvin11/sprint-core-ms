@@ -43,6 +43,26 @@ const redisProvider: Provider = {
     LoggerModule,
   ],
   providers: [
+    {
+      provide: 'REDIS_PUBLISHER',
+      useFactory: () => {
+        return new Redis({
+          host: envs.redisHost,
+          port: envs.redisPort,
+          password: envs.redisPassword,
+        });
+      },
+    },
+    {
+      provide: 'REDIS_SUBSCRIBER',
+      useFactory: () => {
+        return new Redis({
+          host: envs.redisHost,
+          port: envs.redisPort,
+          password: envs.redisPassword,
+        });
+      },
+    },
     redisProvider,
     QueueService,
     RedisRpcService,
@@ -55,6 +75,12 @@ const redisProvider: Provider = {
       useExisting: QueueService,
     },
   ],
-  exports: [redisProvider, RedisRpcPort, QueuesPort],
+  exports: [
+    'REDIS_PUBLISHER',
+    'REDIS_SUBSCRIBER',
+    redisProvider,
+    RedisRpcPort,
+    QueuesPort,
+  ],
 })
 export class RedisModule {}

@@ -5,6 +5,8 @@ import { RedisModule } from 'src/redis/infraestructure/redis.module';
 import { LoggerModule } from 'src/logging/infraestructure/logger.module';
 import { ClientMongoRepository } from './repositories/client.mongo-repository';
 import { ClientRepository } from '../domain/repositories/client.repository';
+import { ClientController } from './controllers/client.controller';
+import { ClientUseCases } from '../application/client.use-cases';
 
 @Module({
   imports: [
@@ -19,10 +21,12 @@ import { ClientRepository } from '../domain/repositories/client.repository';
   ],
   providers: [
     ClientMongoRepository,
+    ClientUseCases,
     {
       provide: ClientRepository,
       useExisting: ClientMongoRepository,
     },
   ],
+  controllers: [ClientController],
 })
 export class ClientModule {}

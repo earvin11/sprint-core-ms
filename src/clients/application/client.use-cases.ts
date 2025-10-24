@@ -1,7 +1,9 @@
+import { Injectable } from '@nestjs/common';
 import { ClientEntity } from '../domain/entities/client.entity';
 import { Client } from '../domain/implementations/client.value';
 import { ClientRepository } from '../domain/repositories/client.repository';
 
+@Injectable()
 export class ClientUseCases {
   constructor(private readonly clientRepository: ClientRepository) {}
 

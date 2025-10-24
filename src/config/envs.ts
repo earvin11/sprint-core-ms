@@ -31,7 +31,10 @@ const evnsSchema = joi
     SEQ_URL: joi.string(),
     SEQ_API_KEY: joi.string(),
     SEQ_WORK_SPACE: joi.string(),
-    NODE_ENV: joi.string().valid('development', 'production', 'test').required(),
+    NODE_ENV: joi
+      .string()
+      .valid('development', 'production', 'test')
+      .required(),
   })
   .unknown(true);
 

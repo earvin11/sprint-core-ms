@@ -20,7 +20,6 @@ async function seedAll() {
   await seedClients(clientModel);
   await seedCrupiers(crupierModel);
 
-
   console.log('Todos los seeders han finalizado');
 
   await app.close();
