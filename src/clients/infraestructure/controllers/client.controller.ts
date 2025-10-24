@@ -2,7 +2,10 @@ import { Controller, Inject, OnModuleInit } from '@nestjs/common';
 import Redis from 'ioredis';
 import { ClientUseCases } from 'src/clients/application/client.use-cases';
 import { LoggerPort } from 'src/logging/domain/logger.port';
-import { clientRpcChannels } from 'src/shared/rpc-channels/client.rpc-channels';
+import {
+  clientRpcChannels,
+  ClientRpcChannelsEnum,
+} from 'src/shared/rpc-channels/client.rpc-channels';
 
 @Controller('clients')
 export class ClientController implements OnModuleInit {
@@ -14,10 +17,34 @@ export class ClientController implements OnModuleInit {
   ) {}
   onModuleInit() {
     this.redisSub.subscribe(...clientRpcChannels, () => {
-      console.log('Ecuchando: ', ...clientRpcChannels);
+      this.loggerPort.log(`Escuchando: ${clientRpcChannels}`);
     });
     this.redisSub.on('message', async (channel, message) => {
-      const data = JSON.parse(message);
+      const payload = JSON.parse(message);
+      const { correlationId, data, replyChannel } = payload;
+
+      switch (channel) {
+        case ClientRpcChannelsEnum.CREATE: {
+          const resp = await this.clientUseCases.create(data);
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
+          break;
+        }
+
+        case ClientRpcChannelsEnum.FIND_ALL: {
+          const resp = await this.clientUseCases.findAll(data.page, data.limit);
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
+          break;
+        }
+
+        default:
+          break;
+      }
     });
   }
 }
