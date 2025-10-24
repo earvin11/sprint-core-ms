@@ -5,6 +5,7 @@ import { envs } from './config/envs';
 import { BullModule } from '@nestjs/bullmq';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ClientModule } from './clients/infraestructure/client.module';
+import { CurrencyModule } from './currencies/infraestructure/currency.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ClientModule } from './clients/infraestructure/client.module';
       },
     }),
     ClientModule,
+    CurrencyModule,
     RedisModule,
   ],
   controllers: [AppController],
