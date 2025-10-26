@@ -2,7 +2,6 @@ import { Controller, Inject, OnModuleInit } from '@nestjs/common';
 import Redis from 'ioredis';
 import { LoggerPort } from 'src/logging/domain/logger.port';
 import { OperatorUseCases } from 'src/operators/application/operator.use-cases';
-import { ClientRpcChannelsEnum } from 'src/shared/rpc-channels/client.rpc-channels';
 import {
   operatorRpcChannels,
   OperatorRpcChannelsEnum,
@@ -34,7 +33,7 @@ export class OperatorController implements OnModuleInit {
           break;
         }
 
-        case ClientRpcChannelsEnum.FIND_ALL: {
+        case OperatorRpcChannelsEnum.FIND_ALL: {
           const resp = await this.operatorUseCases.findAll(
             data.page,
             data.limit,
@@ -46,7 +45,7 @@ export class OperatorController implements OnModuleInit {
           break;
         }
 
-        case ClientRpcChannelsEnum.FIND_BY_ID: {
+        case OperatorRpcChannelsEnum.FIND_BY_ID: {
           const resp = await this.operatorUseCases.findById(data.id);
           await this.redisPub.publish(
             replyChannel,
@@ -55,7 +54,7 @@ export class OperatorController implements OnModuleInit {
           break;
         }
 
-        case ClientRpcChannelsEnum.FIND_ONE: {
+        case OperatorRpcChannelsEnum.FIND_ONE: {
           const resp = await this.operatorUseCases.findOneBy(data.filter);
           await this.redisPub.publish(
             replyChannel,
@@ -64,7 +63,7 @@ export class OperatorController implements OnModuleInit {
           break;
         }
 
-        case ClientRpcChannelsEnum.UPDATE: {
+        case OperatorRpcChannelsEnum.UPDATE: {
           const resp = await this.operatorUseCases.update(data.id, data.data);
           await this.redisPub.publish(
             replyChannel,
@@ -73,7 +72,7 @@ export class OperatorController implements OnModuleInit {
           break;
         }
 
-        case ClientRpcChannelsEnum.DELETE: {
+        case OperatorRpcChannelsEnum.DELETE: {
           const resp = await this.operatorUseCases.remove(data.id);
           await this.redisPub.publish(
             replyChannel,
