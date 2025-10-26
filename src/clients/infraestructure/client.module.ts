@@ -28,5 +28,6 @@ import { ClientUseCases } from '../application/client.use-cases';
     },
   ],
   controllers: [ClientController],
+  exports: [ClientRepository, ClientUseCases],
 })
 export class ClientModule {}

@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ClientModule } from './clients/infraestructure/client.module';
 import { CurrencyModule } from './currencies/infraestructure/currency.module';
 import { CrupierModule } from './crupiers/infraestructure/crupier.module';
+import { OperatorModule } from './operators/infraestructure/operator.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { CrupierModule } from './crupiers/infraestructure/crupier.module';
     ClientModule,
     CrupierModule,
     CurrencyModule,
+    OperatorModule,
     RedisModule,
   ],
   controllers: [AppController],

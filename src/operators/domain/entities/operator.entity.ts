@@ -1,5 +1,4 @@
 export interface OperatorEntity {
-  _id?: string;
   name: string;
   uuid?: string;
   client: string;
