@@ -17,7 +17,7 @@ export class ClientMongoRepository implements ClientRepository {
     return resp;
   }
   async findAll(page: number, limit: number): Promise<ClientEntity[] | []> {
-    const data = await this.clientModel.find().skip(page).limit(limit);
+    const data = await this.clientModel.find(); //.skip(page).limit(limit);
     return data;
   }
   async findById(id: string): Promise<ClientEntity | null> {

@@ -42,6 +42,42 @@ export class ClientController implements OnModuleInit {
           break;
         }
 
+        case ClientRpcChannelsEnum.FIND_BY_ID: {
+          const resp = await this.clientUseCases.findById(data.id);
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
+          break;
+        }
+
+        case ClientRpcChannelsEnum.FIND_ONE: {
+          const resp = await this.clientUseCases.findOneBy(data.filter);
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
+          break;
+        }
+
+        case ClientRpcChannelsEnum.UPDATE: {
+          const resp = await this.clientUseCases.update(data.id, data.data);
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
+          break;
+        }
+
+        case ClientRpcChannelsEnum.DELETE: {
+          const resp = await this.clientUseCases.remove(data.id);
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
+          break;
+        }
+
         default:
           break;
       }

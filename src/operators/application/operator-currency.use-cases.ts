@@ -72,58 +72,58 @@ export class OperatorCurrencyUseCases {
     return data;
   };
 
-  public assignCurrenciesInOperator = async (
-    currenciesIds: string[],
-    operatorId: string,
-  ) => {
-    // Verificar las currencies de este operador
-    const currenciesOfOperator = await this.findManyBy({
-      operator: operatorId,
-    });
-    const currenciesInOperator = currenciesOfOperator.map(({ currency }) =>
-      String(currency),
-    );
+  //   public assignCurrenciesInOperator = async (
+  //     currenciesIds: string[],
+  //     operatorId: string,
+  //   ) => {
+  //     // Verificar las currencies de este operador
+  //     const currenciesOfOperator = await this.findManyBy({
+  //       operator: operatorId,
+  //     });
+  //     const currenciesInOperator = currenciesOfOperator.map(({ currency }) =>
+  //       String(currency),
+  //     );
 
-    // Currencies a importar
-    const currenciesInRequest = currenciesIds;
+  //     // Currencies a importar
+  //     const currenciesInRequest = currenciesIds;
 
-    const currenciesToAssign: string[] = [];
+  //     const currenciesToAssign: string[] = [];
 
-    currenciesInRequest.forEach((currencyToAssign: string) => {
-      const currenciesOperator = currenciesInOperator;
+  //     currenciesInRequest.forEach((currencyToAssign: string) => {
+  //       const currenciesOperator = currenciesInOperator;
 
-      if (!currenciesOperator.includes(currencyToAssign)) {
-        currenciesToAssign.push(currencyToAssign);
-      }
-    });
+  //       if (!currenciesOperator.includes(currencyToAssign)) {
+  //         currenciesToAssign.push(currencyToAssign);
+  //       }
+  //     });
 
-    const currenciesValidate =
-      await this.currencyRepository.findManyByManyIds(currenciesToAssign);
+  //     const currenciesValidate =
+  //       await this.currencyRepository.findManyByManyIds(currenciesToAssign);
 
-    for (let i = 0; i < currenciesValidate.length; i++) {
-      const currency = currenciesValidate[i];
+  //     for (let i = 0; i < currenciesValidate.length; i++) {
+  //       const currency = currenciesValidate[i];
 
-      await this.create({
-        operator: operatorId,
-        currency: currency._id!,
-      });
-    }
+  //       await this.create({
+  //         operator: operatorId,
+  //         currency: currency._id!,
+  //       });
+  //     }
 
-    return;
-  };
+  //     return;
+  //   };
 
-  public modifyCurrenciesInOperator = async (
-    currenciesIds: string[],
-    operatorId: string,
-  ) => {
-    const operatorCurrencies = await this.findManyBy({ operator: operatorId });
+  //   public modifyCurrenciesInOperator = async (
+  //     currenciesIds: string[],
+  //     operatorId: string,
+  //   ) => {
+  //     const operatorCurrencies = await this.findManyBy({ operator: operatorId });
 
-    for (let i = 0; i < operatorCurrencies.length; i++) {
-      const operatorCurrency = operatorCurrencies[i];
-      await this.remove(operatorCurrency._id!);
-    }
+  //     for (let i = 0; i < operatorCurrencies.length; i++) {
+  //       const operatorCurrency = operatorCurrencies[i];
+  //       await this.remove(operatorCurrency._id!);
+  //     }
 
-    await this.assignCurrenciesInOperator(currenciesIds, operatorId);
-    return;
-  };
+  //     await this.assignCurrenciesInOperator(currenciesIds, operatorId);
+  //     return;
+  //   };
 }
