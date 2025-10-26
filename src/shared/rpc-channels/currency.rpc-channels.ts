@@ -2,7 +2,7 @@ export enum CurrencyRpcChannelsEnum {
   CREATE = 'create-currency',
   FIND_BY_ID = 'currency-by-id',
   FIND_ONE = 'currency-by-filter',
-  FIND_ALL = 'find-currency',
+  FIND_ALL = 'find-currencies',
   UPDATE = 'update-currency',
   DELETE = 'delete currency',
 }

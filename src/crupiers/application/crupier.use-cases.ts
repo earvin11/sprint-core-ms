@@ -1,7 +1,9 @@
+import { Injectable } from '@nestjs/common';
 import { CrupierEntity } from '../domain/crupier.entity';
 import { CrupierRepository } from '../domain/crupier.repository';
 import { Crupier } from '../domain/crupier.value';
 
+@Injectable()
 export class CrupierUseCases {
   constructor(private readonly crupierRepository: CrupierRepository) {}
 
