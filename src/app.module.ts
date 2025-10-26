@@ -8,6 +8,7 @@ import { ClientModule } from './clients/infraestructure/client.module';
 import { CurrencyModule } from './currencies/infraestructure/currency.module';
 import { CrupierModule } from './crupiers/infraestructure/crupier.module';
 import { OperatorModule } from './operators/infraestructure/operator.module';
+import { GameModule } from './games/infraestructure/game.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { OperatorModule } from './operators/infraestructure/operator.module';
     ClientModule,
     CrupierModule,
     CurrencyModule,
+    GameModule,
     OperatorModule,
     RedisModule,
   ],

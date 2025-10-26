@@ -1,0 +1,31 @@
+export interface RouletteEntity {
+  jackpotRandom: boolean;
+  jackpotVersion: string;
+  alertEmails: string[];
+  maxRepeatedResults: number;
+  multisAllowed: number[];
+  isManualRoulette: boolean;
+  numbersDistribution: string;
+  bank: number;
+  isShow: boolean;
+  openingTime: string;
+  closingTime: string;
+  initialBank: number;
+  maximunBank: number;
+  pleno: number;
+  semipleno: number;
+  cuadro: number;
+  calle: number;
+  linea: number;
+  columna: number;
+  docena: number;
+  chanceSimple: number;
+  cubre: number;
+  specialCalle: number;
+  minBet: number;
+  maxBet: number;
+  minutesToDisable: number;
+  maxPlenosBet: number;
+  numbersOfJackpot: number;
+  saveRecordings: boolean;
+}
