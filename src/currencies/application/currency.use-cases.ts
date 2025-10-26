@@ -1,7 +1,9 @@
+import { Injectable } from '@nestjs/common';
 import { CurrencyEntity } from '../domain/currency.entity';
 import { CurrencyRepository } from '../domain/currency.repository';
 import { Currency } from '../domain/currency.value';
 
+@Injectable()
 export class CurrencyUseCases {
   constructor(private readonly currencyRepository: CurrencyRepository) {}
 

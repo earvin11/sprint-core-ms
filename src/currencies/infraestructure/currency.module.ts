@@ -5,6 +5,8 @@ import { LoggerModule } from 'src/logging/infraestructure/logger.module';
 import { RedisModule } from 'src/redis/infraestructure/redis.module';
 import { CurrencyMongoRepository } from './repositories/currency.mongo-repository';
 import { CurrencyRepository } from '../domain/currency.repository';
+import { CurrencyController } from './controllers/currency.controller';
+import { CurrencyUseCases } from '../application/currency.use-cases';
 
 @Module({
   imports: [
@@ -19,10 +21,12 @@ import { CurrencyRepository } from '../domain/currency.repository';
   ],
   providers: [
     CurrencyMongoRepository,
+    CurrencyUseCases,
     {
       provide: CurrencyRepository,
       useExisting: CurrencyMongoRepository,
     },
   ],
+  controllers: [CurrencyController],
 })
 export class CurrencyModule {}
