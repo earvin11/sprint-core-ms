@@ -31,7 +31,7 @@ export class Roulette implements RouletteEntity {
     this.minutesToDisable = data.minutesToDisable;
     this.multisAllowed = data.multisAllowed;
     this.numbersDistribution = data.numbersDistribution;
-    this.type = data.type;
+    // this.type = data.type;
     this.active = true;
     this.alwaysOpen = data.alwaysOpen;
     this.logo = data.logo;

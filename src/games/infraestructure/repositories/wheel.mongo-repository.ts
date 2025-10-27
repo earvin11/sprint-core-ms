@@ -4,11 +4,13 @@ import { Model } from 'mongoose';
 import { Game } from '../models/game.model';
 import { WheelRepository } from 'src/games/domain/repositories/wheel-fortune.repository';
 import { WheelEntity } from 'src/games/domain/entities/wheel.entity';
+import { WheelDocument } from '../models/wheel.model';
 
 @Injectable()
 export class WheelMongoRepository implements WheelRepository {
   constructor(
-    @InjectModel(Game.name) private readonly wheelModel: Model<Game>,
+    @InjectModel(Game.name)
+    private readonly wheelModel: Model<WheelDocument>,
   ) {}
   public create = async (data: WheelEntity): Promise<WheelEntity> => {
     const newData = await this.wheelModel.create(data);
@@ -56,7 +58,7 @@ export class WheelMongoRepository implements WheelRepository {
   ) => {
     await this.wheelModel.updateMany(filter, data);
   };
-  public remove = async (id: string): Promise<WheelEntity | null> => {
+  remove = (id: string): Promise<WheelEntity | null> => {
     console.log({ id });
     throw new Error('Method not implemented.');
   };

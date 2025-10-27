@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto';
 import { GameEntity, GameTypes } from '../entities/game.entity';
 
 export class Game implements GameEntity {
-  public type: GameTypes;
+  // public type: GameTypes;
   public name: string;
   public providerId: string;
   public active: boolean;
@@ -17,7 +17,7 @@ export class Game implements GameEntity {
     this.logo = data.logo;
     this.name = data.name;
     this.providerId = data.providerId;
-    this.type = data.type;
+    // this.type = data.type;
     this.urlTransmision = data.urlTransmision;
     this.uuid = randomUUID();
   }

@@ -16,7 +16,7 @@ export class Wheel extends Game implements WheelEntity {
     ],
     required: true,
   })
-  betPays: Object;
+  betPays: Array<{ number: number; multiplier: number }>;
   // @Prop({ type: String })
   // launchURL: string;
   @Prop({ type: Number, default: 2 })
@@ -32,3 +32,4 @@ export class Wheel extends Game implements WheelEntity {
 }
 
 export const WheelSchema = SchemaFactory.createForClass(Wheel);
+export type WheelDocument = WheelEntity & Document;

@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { GameEntity, GameTypes } from 'src/games/domain/entities/game.entity';
 
-// @Schema({ discriminatorKey: 'type' })
+@Schema({ discriminatorKey: 'type' })
 export class Game extends Document implements GameEntity {
   @Prop({ type: Boolean, default: true })
   active: boolean;
@@ -28,12 +28,12 @@ export class Game extends Document implements GameEntity {
   providerId: string;
   @Prop({ type: Boolean, default: true })
   status: boolean;
-  @Prop({
-    type: String,
-    required: true,
-    enum: GameTypes,
-  })
-  type: GameTypes;
+  // @Prop({
+  //   type: String,
+  //   required: true,
+  //   enum: GameTypes,
+  // })
+  // type: GameTypes;
   @Prop({ type: String })
   urlTransmision: string;
   @Prop({ type: Boolean, default: false })

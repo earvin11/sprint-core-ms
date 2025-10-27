@@ -1,9 +1,9 @@
-import { GameEntity } from "./game.entity";
+import { GameEntity } from './game.entity';
 
 export interface WheelEntity extends GameEntity {
   aditionalTime?: number;
-  // betPays: Record<number, number>[];
-  betPays: Object;
+  betPays: Array<{ number: number; multiplier: number }>;
+  // betPays: Object;
   maxBetFigures?: number;
   timeOne?: number;
   timeTwo?: number;

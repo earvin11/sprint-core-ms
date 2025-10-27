@@ -1,5 +1,5 @@
 export interface GameEntity {
-  type: GameTypes;
+  // type: GameTypes;
   name: string;
   providerId: string;
   active?: boolean;
