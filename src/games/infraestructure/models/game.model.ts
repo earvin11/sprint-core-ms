@@ -3,6 +3,7 @@ import { Document } from 'mongoose';
 import { GameEntity, GameTypes } from 'src/games/domain/entities/game.entity';
 
 // @Schema({ discriminatorKey: 'type' })
+@Schema()
 export class Game extends Document implements GameEntity {
   @Prop({ type: Boolean, default: true })
   active: boolean;

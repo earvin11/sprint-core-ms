@@ -1,4 +1,4 @@
-import { GameEntity } from "./game.entity";
+import { GameEntity } from './game.entity';
 
 export interface WheelEntity extends GameEntity {
   aditionalTime?: number;

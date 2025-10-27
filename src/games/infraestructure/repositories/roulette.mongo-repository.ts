@@ -4,11 +4,14 @@ import { RouletteEntity } from 'src/games/domain/entities/roulette.entity';
 import { RouletteRepository } from 'src/games/domain/repositories/roulette.repository';
 import { Model } from 'mongoose';
 import { Game } from '../models/game.model';
+import { Roulette } from '../models/roulette.model';
+import { GameTypes } from 'src/games/domain/entities/game.entity';
 
 @Injectable()
 export class RouletteMongoRepository implements RouletteRepository {
   constructor(
-    @InjectModel(Game.name) private readonly rouletteModel: Model<Game>,
+    @InjectModel(GameTypes.ROULETTE)
+    private readonly rouletteModel: Model<Roulette>,
   ) {}
   public create = async (data: RouletteEntity): Promise<RouletteEntity> => {
     const newData = await this.rouletteModel.create(data);
