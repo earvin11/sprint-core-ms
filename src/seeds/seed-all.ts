@@ -4,6 +4,7 @@ import { seedClients } from './client.seed';
 import { envs } from 'src/config/envs';
 import { seedCurrencies } from './currency.seed';
 import { seedCrupiers } from './crupier.seed';
+import { seedOperators } from './operator.seed';
 
 async function seedAll() {
   if (envs.NODE_ENV === 'production') {
@@ -15,10 +16,12 @@ async function seedAll() {
   const clientModel = app.get('ClientModel');
   const currencyModel = app.get('CurrencyModel');
   const crupierModel = app.get('CrupierModel');
+  const operatorModel = app.get('OperatorModel');
 
   await seedCurrencies(currencyModel);
   await seedClients(clientModel);
   await seedCrupiers(crupierModel);
+  await seedOperators(operatorModel, clientModel);
 
   console.log('Todos los seeders han finalizado');
 
