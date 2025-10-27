@@ -1,10 +1,7 @@
-// import RouletteModel from "../models/roulette.model";
-
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { RouletteEntity } from 'src/games/domain/entities/roulette.entity';
 import { RouletteRepository } from 'src/games/domain/repositories/roulette.repository';
-import { Roulette } from '../models/roulette.model';
 import { Model } from 'mongoose';
 import { Game } from '../models/game.model';
 

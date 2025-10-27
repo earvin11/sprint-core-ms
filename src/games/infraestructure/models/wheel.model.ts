@@ -16,7 +16,7 @@ export class Wheel extends Game implements WheelEntity {
     ],
     required: true,
   })
-  betPays: Record<number, number>[];
+  betPays: Object;
   // @Prop({ type: String })
   // launchURL: string;
   @Prop({ type: Number, default: 2 })
