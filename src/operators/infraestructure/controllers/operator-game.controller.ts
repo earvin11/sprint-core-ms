@@ -32,7 +32,7 @@ export class OperatorGameController implements OnModuleInit {
           switch (data.typeGame) {
             case GameTypes.ROULETTE: {
               const resp = await this.operatorRouletteUseCases.create(
-                data.data,
+                data,
               );
               await this.redisPub.publish(
                 replyChannel,
@@ -41,7 +41,8 @@ export class OperatorGameController implements OnModuleInit {
               break;
             }
             case GameTypes.WHEEL: {
-              const resp = await this.operatorWheelUseCases.create(data.data);
+                console.log({ data })
+              const resp = await this.operatorWheelUseCases.create(data);
               await this.redisPub.publish(
                 replyChannel,
                 JSON.stringify({ correlationId, data: resp }),
