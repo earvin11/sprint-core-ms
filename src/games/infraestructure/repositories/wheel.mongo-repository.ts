@@ -4,13 +4,15 @@ import { Model } from 'mongoose';
 import { Game } from '../models/game.model';
 import { WheelRepository } from 'src/games/domain/repositories/wheel-fortune.repository';
 import { WheelEntity } from 'src/games/domain/entities/wheel.entity';
+import { Wheel } from '../models/wheel.model';
+import { GameTypes } from 'src/games/domain/entities/game.entity';
 
 @Injectable()
 export class WheelMongoRepository implements WheelRepository {
   constructor(
-    @InjectModel(Game.name) private readonly wheelModel: Model<Game>,
+    @InjectModel(GameTypes.WHEEL) private readonly wheelModel: Model<Wheel>,
   ) {}
-  public create = async (data: WheelEntity): Promise<WheelEntity> => {
+  public create = async (data: WheelEntity): Promise<any> => {
     const newData = await this.wheelModel.create(data);
     return await newData.save();
   };
@@ -18,33 +20,33 @@ export class WheelMongoRepository implements WheelRepository {
     page: number,
     limit: number,
     filter?: Record<string, any>,
-  ): Promise<WheelEntity[] | []> => {
+  ): Promise<any[] | []> => {
     const data = await this.wheelModel
       .find({ ...filter })
       .skip(page)
       .limit(limit);
     return data;
   };
-  public findById = async (id: string): Promise<WheelEntity | null> => {
+  public findById = async (id: string): Promise<any | null> => {
     const data = await this.wheelModel.findById(id);
     return data;
   };
   public findManyBy = async (
     filter: Record<string, any>,
-  ): Promise<WheelEntity[] | []> => {
+  ): Promise<any[] | []> => {
     const data = await this.wheelModel.find(filter);
     return data;
   };
   public findOneBy = async (
     filter: Record<string, any>,
-  ): Promise<WheelEntity | null> => {
+  ): Promise<any | null> => {
     const data = await this.wheelModel.findOne(filter);
     return data;
   };
   public update = async (
     id: string,
-    data: Partial<WheelEntity>,
-  ): Promise<WheelEntity | null> => {
+    data: Partial<any>,
+  ): Promise<any | null> => {
     const dataUpdate = await this.wheelModel.findByIdAndUpdate(id, data, {
       new: true,
     });
@@ -52,11 +54,11 @@ export class WheelMongoRepository implements WheelRepository {
   };
   public updateMany = async (
     filter: Record<string, any>,
-    data: Partial<WheelEntity>,
+    data: Partial<any>,
   ) => {
     await this.wheelModel.updateMany(filter, data);
   };
-  public remove = async (id: string): Promise<WheelEntity | null> => {
+  public remove = async (id: string): Promise<any | null> => {
     console.log({ id });
     throw new Error('Method not implemented.');
   };

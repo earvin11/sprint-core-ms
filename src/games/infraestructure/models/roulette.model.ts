@@ -12,23 +12,14 @@ export class Roulette extends Game implements RouletteEntity {
   image: string;
   @Prop({ type: Number })
   number: number;
-  // Apuestas específicas de ruleta
-  @Prop({ type: Number })
-  calle: number;
   @Prop({ type: String, default: 'V1' })
   cameraVersion: string;
-  // chanceSimple: Number,
   @Prop({ type: Number, default: 1500 })
   initialBank: number;
   @Prop({ type: Boolean, default: false })
   isManualRoulette: boolean;
   @Prop({ type: Boolean, default: false })
   isShow: boolean;
-  // linea: Number,
-  // maxBet: Number,
-  // maxBetOutside: Number,
-  // maxBetPosition: Number,
-  // maxBetWhitin: Number,
   @Prop({ type: Number, default: 5000 })
   maximunBank: number;
   // maxPlenosBet: { type: Number, Default: 24 },
@@ -43,9 +34,41 @@ export class Roulette extends Game implements RouletteEntity {
   numbersDistribution: string;
   @Prop({ type: Number })
   numbersOfJackpot: number;
-  // pleno: Number,
-  // semipleno: Number
-  // specialCalle: Number,
+  @Prop({ default: 36 })
+  pleno: number;
+
+  @Prop({ default: 18 })
+  semipleno: number;
+
+  @Prop({ default: 9 })
+  cuadro: number;
+
+  @Prop({ default: 12 })
+  calle: number;
+
+  @Prop({ default: 6 })
+  linea: number;
+
+  @Prop({ default: 3 })
+  columna: number;
+
+  @Prop({ default: 2 })
+  docena: number;
+
+  @Prop({ default: 2 })
+  chanceSimple: number;
+
+  @Prop({ default: 12 })
+  cubre: number;
+
+  @Prop({ default: 7 })
+  specialCalle: number;
+
+  // @Prop({ default: 2 })
+  // evenOdd: number;
+
+  // @Prop({ default: 2 })
+  // color: number;
 }
 
 export const RouletteSchema = SchemaFactory.createForClass(Roulette);

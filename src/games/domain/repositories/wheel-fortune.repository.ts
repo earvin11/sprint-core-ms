@@ -8,12 +8,8 @@ export abstract class WheelRepository {
     filter?: Record<string, any>,
   ): Promise<WheelEntity[] | []>;
   abstract findById(id: string): Promise<WheelEntity | null>;
-  abstract findManyBy(
-    filter: Record<string, any>,
-  ): Promise<WheelEntity[] | []>;
-  abstract findOneBy(
-    filter: Record<string, any>,
-  ): Promise<WheelEntity | null>;
+  abstract findManyBy(filter: Record<string, any>): Promise<WheelEntity[] | []>;
+  abstract findOneBy(filter: Record<string, any>): Promise<WheelEntity | null>;
   abstract update(
     id: string,
     data: Partial<WheelEntity>,

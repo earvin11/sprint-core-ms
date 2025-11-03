@@ -10,6 +10,10 @@ import { RouletteRepository } from '../domain/repositories/roulette.repository';
 import { RouletteController } from './controllers/roulette.controller';
 import { LoggerModule } from 'src/logging/infraestructure/logger.module';
 import { RedisModule } from 'src/redis/infraestructure/redis.module';
+import { WheelMongoRepository } from './repositories/wheel.mongo-repository';
+import { WheelUseCases } from '../application/wheel.use-cases';
+import { WheelRepository } from '../domain/repositories/wheel-fortune.repository';
+import { WheelController } from './controllers/wheel.controller';
 
 @Module({
   imports: [
@@ -29,11 +33,17 @@ import { RedisModule } from 'src/redis/infraestructure/redis.module';
   providers: [
     RouletteMongoRepository,
     RouletteUseCases,
+    WheelMongoRepository,
+    WheelUseCases,
     {
       provide: RouletteRepository,
       useExisting: RouletteMongoRepository,
     },
+    {
+      provide: WheelRepository,
+      useExisting: WheelMongoRepository,
+    },
   ],
-  controllers: [RouletteController],
+  controllers: [RouletteController, WheelController],
 })
 export class GameModule {}
