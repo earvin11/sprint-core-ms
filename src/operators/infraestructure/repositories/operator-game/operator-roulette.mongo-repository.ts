@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { GameTypes } from 'src/games/domain/entities/game.entity';
 import { OperatorRouletteEntity } from 'src/operators/domain/entities/operator-game/operator-game-roulette.entity';
 import { OperatorRouletteRepository } from 'src/operators/domain/repositories/operator-game/operator-roulette.repository';
 import { OperatorRoulette } from '../../models/operator-game/operator-roulette.model';
+import { OperatorGameTypesEnum } from 'src/operators/domain/entities/operator-game/operator-game.entity';
 
 @Injectable()
 export class OperatorRouletteMongoRepository
   implements OperatorRouletteRepository
 {
   constructor(
-    @InjectModel(GameTypes.ROULETTE)
+    @InjectModel(OperatorGameTypesEnum.OP_ROULETTE)
     private readonly operatorRouletteModel: Model<OperatorRoulette>,
   ) {}
 

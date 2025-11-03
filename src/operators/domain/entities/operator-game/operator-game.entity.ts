@@ -5,3 +5,8 @@ export interface OperatorGameEntity {
   currencies: string[];
   order?: number;
 }
+
+export enum OperatorGameTypesEnum {
+  OP_ROULETTE = 'op_roulette',
+  OP_WHEEL = 'op_wheel',
+}

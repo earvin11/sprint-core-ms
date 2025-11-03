@@ -17,9 +17,12 @@ import {
   OperatorGame,
   OperatorGameSchema,
 } from './models/operator-game/operator-game.model';
-import { GameTypes } from 'src/games/domain/entities/game.entity';
 import { OperatorRouletteSchema } from './models/operator-game/operator-roulette.model';
 import { OperatorWheelSchema } from './models/operator-game/operator-wheel.model';
+import { OperatorWheelUseCases } from '../application/operator-game/operator-wheel.use-cases';
+import { OperatorRouletteUseCases } from '../application/operator-game/operator-roulette.use-cases';
+import { OperatorGameController } from './controllers/operator-game.controller';
+import { OperatorGameTypesEnum } from '../domain/entities/operator-game/operator-game.entity';
 
 @Module({
   imports: [
@@ -32,8 +35,8 @@ import { OperatorWheelSchema } from './models/operator-game/operator-wheel.model
         name: OperatorGame.name,
         schema: OperatorGameSchema,
         discriminators: [
-          { name: GameTypes.ROULETTE, schema: OperatorRouletteSchema },
-          { name: GameTypes.WHEEL, schema: OperatorWheelSchema },
+          { name: OperatorGameTypesEnum.OP_ROULETTE, schema: OperatorRouletteSchema },
+          { name: OperatorGameTypesEnum.OP_WHEEL, schema: OperatorWheelSchema },
         ],
       },
     ]),
@@ -47,6 +50,8 @@ import { OperatorWheelSchema } from './models/operator-game/operator-wheel.model
     OperatorRouletteMongoRepository,
     OperatorWheelMongoRepository,
     OperatorUseCases,
+    OperatorRouletteUseCases,
+    OperatorWheelUseCases,
     {
       provide: OperatorRepository,
       useExisting: OperatorMongoRepository,
@@ -60,6 +65,6 @@ import { OperatorWheelSchema } from './models/operator-game/operator-wheel.model
       useExisting: OperatorWheelMongoRepository,
     },
   ],
-  controllers: [OperatorController],
+  controllers: [OperatorController, OperatorGameController],
 })
 export class OperatorModule {}
