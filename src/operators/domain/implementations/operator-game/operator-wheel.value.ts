@@ -4,7 +4,7 @@ import {
   OperatorWheelEntity,
 } from '../../entities/operator-game/operator-wheel.entity';
 
-export class OperatorWheeel implements OperatorWheelEntity {
+export class OperatorWheel implements OperatorWheelEntity {
   public configPayment: ConfigPayment[];
   public operator: string;
   public game: string;

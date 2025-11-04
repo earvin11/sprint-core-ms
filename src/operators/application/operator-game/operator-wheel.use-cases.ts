@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { OperatorRouletteEntity } from 'src/operators/domain/entities/operator-game/operator-game-roulette.entity';
 import { OperatorWheelEntity } from 'src/operators/domain/entities/operator-game/operator-wheel.entity';
+import { OperatorWheel } from 'src/operators/domain/implementations/operator-game/operator-wheel.value';
 import { OperatorWheelRepository } from 'src/operators/domain/repositories/operator-game/operator-wheel.repository';
-import { OperatorWheel } from 'src/operators/infraestructure/models/operator-game/operator-wheel.model';
 
 @Injectable()
 export class OperatorWheelUseCases {
