@@ -2,13 +2,12 @@ import { Controller, Inject, OnModuleInit } from '@nestjs/common';
 import Redis from 'ioredis';
 import { GameTypes } from 'src/games/domain/entities/game.entity';
 import { LoggerPort } from 'src/logging/domain/logger.port';
+import { OperatorGameUseCases } from 'src/operators/application/operator-game/operator-game.use-cases';
 import { OperatorRouletteUseCases } from 'src/operators/application/operator-game/operator-roulette.use-cases';
 import { OperatorWheelUseCases } from 'src/operators/application/operator-game/operator-wheel.use-cases';
 import {
   operatorGameRpcChannels,
   OperatorGameRpcChannelsEnum,
-  operatorRpcChannels,
-  OperatorRpcChannelsEnum,
 } from 'src/shared/rpc-channels/operator.rpc-channels';
 
 @Controller('operator-games')
@@ -16,6 +15,7 @@ export class OperatorGameController implements OnModuleInit {
   constructor(
     @Inject('REDIS_SUBSCRIBER') private readonly redisSub: Redis,
     @Inject('REDIS_PUBLISHER') private readonly redisPub: Redis,
+    private readonly operatorGameUseCases: OperatorGameUseCases,
     private readonly operatorRouletteUseCases: OperatorRouletteUseCases,
     private readonly operatorWheelUseCases: OperatorWheelUseCases,
     private readonly loggerPort: LoggerPort,
@@ -61,32 +61,62 @@ export class OperatorGameController implements OnModuleInit {
           break;
         }
 
-        case OperatorGameRpcChannelsEnum.FIND_BY_OPERATOR: {
-          switch (data.typeGame) {
-            case GameTypes.ROULETTE: {
-              console.log('DATA', data);
-              const resp = await this.operatorRouletteUseCases.findOneBy({
-                operator: data.operator,
-              });
-              console.log('RESPUESTA', resp);
-              // await this.redisPub.publish(
-              //   replyChannel,
-              //   JSON.stringify({ correlationId, data: resp }),
-              // );
-              break;
-            }
-            case GameTypes.WHEEL: {
-              // const resp = await this.operatorWheelUseCases.create(data);
-              // await this.redisPub.publish(
-              //   replyChannel,
-              //   JSON.stringify({ correlationId, data: resp }),
-              // );
-              break;
-            }
-            default:
-              break;
-          }
+        case OperatorGameRpcChannelsEnum.FIND_ALL: {
+          const resp = await this.operatorGameUseCases.findAll();
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
+          break;
+        }
 
+        case OperatorGameRpcChannelsEnum.FIND_BY_OPERATOR: {
+          const resp = await this.operatorGameUseCases.findOneBy({
+            operator: data.operator,
+          });
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
+          break;
+        }
+
+        case OperatorGameRpcChannelsEnum.FIND_BY_OPERATOR_GAME: {
+          const resp = await this.operatorGameUseCases.findOneBy({
+            operator: data.operator,
+            game: data.game,
+          });
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
+          break;
+        }
+
+        case OperatorGameRpcChannelsEnum.UPDATE_BY_OPERATOR_GAME: {
+          //   const resp = await this.operatorGameUseCases.findOneBy({ operator: data.operator, game: data.game });
+          //    await this.redisPub.publish(
+          //         replyChannel,
+          //         JSON.stringify({ correlationId, data: resp }),
+          //       );
+          break;
+        }
+
+        case OperatorGameRpcChannelsEnum.FIND_BY_ID: {
+          const resp = await this.operatorGameUseCases.findById(data.id);
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
+          break;
+        }
+
+        case OperatorGameRpcChannelsEnum.DELETE: {
+          const resp = await this.operatorGameUseCases.remove(data.id);
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
           break;
         }
       }

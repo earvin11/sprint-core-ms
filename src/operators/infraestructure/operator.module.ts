@@ -40,6 +40,9 @@ import { OperatorLimitsController } from './controllers/operator-limits.controll
 import { OperatorLimitsUseCases } from '../application/operator-limits/operator-limits.use-cases';
 import { OperatorLimitsMongoRepository } from './repositories/operator-limits/operator-limits.mongo-repository';
 import { OperatorLimitsRepository } from '../domain/repositories/operator-limits/operator-limits.repository';
+import { OperatorGameRepository } from '../domain/repositories/operator-game/operator-game.repository';
+import { OperatorGameMongoRepository } from './repositories/operator-game/operator-game.mongo-repository';
+import { OperatorGameUseCases } from '../application/operator-game/operator-game.use-cases';
 
 @Module({
   imports: [
@@ -80,21 +83,30 @@ import { OperatorLimitsRepository } from '../domain/repositories/operator-limits
     RedisModule,
   ],
   providers: [
+    // Repositories
     OperatorMongoRepository,
+    OperatorGameMongoRepository,
     OperatorRouletteMongoRepository,
     OperatorWheelMongoRepository,
     OperatorLimitsMongoRepository,
     OperatorLimitsRouletteMongoRepository,
     OperatorLimitsWheelMongoRepository,
+    //Use cases
     OperatorUseCases,
+    OperatorGameUseCases,
     OperatorRouletteUseCases,
     OperatorWheelUseCases,
     OperatorLimitsUseCases,
     OperatorLimitsRouletteUseCases,
     OperatorLimitsWheelUseCases,
+    // DI
     {
       provide: OperatorRepository,
       useExisting: OperatorMongoRepository,
+    },
+    {
+      provide: OperatorGameRepository,
+      useExisting: OperatorGameMongoRepository,
     },
     {
       provide: OperatorRouletteRepository,
