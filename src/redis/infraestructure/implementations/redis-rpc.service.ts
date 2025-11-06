@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import Redis from 'ioredis';
-import { randomUUID } from 'crypto';
 import { envs } from 'src/config/envs';
 import { RedisRpcPort } from 'src/redis/domain/redis-rpc.port';
 import { LoggerPort } from 'src/logging/domain/logger.port';
+import { GenerateId } from 'src/shared/helpers/uuid-generator';
 
 @Injectable()
 export class RedisRpcService implements RedisRpcPort {
@@ -84,7 +84,7 @@ export class RedisRpcService implements RedisRpcPort {
     data: any,
     timeoutMs: number,
   ): Promise<T> {
-    const correlationId = randomUUID();
+    const correlationId = new GenerateId().uuid;
     const replyChannel = `rpc:reply:${correlationId}`;
 
     await this.redisSub.subscribe(replyChannel);

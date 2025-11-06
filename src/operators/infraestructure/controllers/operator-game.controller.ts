@@ -20,9 +20,15 @@ export class OperatorGameController implements OnModuleInit {
   ) {}
   onModuleInit() {
     //TODO: separar channels
-    this.redisSub.subscribe(...operatorRpcChannels, () => {
-      this.loggerPort.log(`Escuchando: ${operatorRpcChannels}`);
-    });
+    this.redisSub
+      .subscribe(...operatorRpcChannels, () => {
+        this.loggerPort.log(`Escuchando: ${operatorRpcChannels}`);
+      })
+      .catch((error) => {
+        this.loggerPort.error(
+          `Error al suscribirse a los canales de operadores: ${error.message}`,
+        );
+      });
     this.redisSub.on('message', async (channel, message) => {
       const payload = JSON.parse(message);
       const { correlationId, data, replyChannel } = payload;
@@ -39,7 +45,6 @@ export class OperatorGameController implements OnModuleInit {
               break;
             }
             case GameTypes.WHEEL: {
-              console.log({ data });
               const resp = await this.operatorWheelUseCases.create(data);
               await this.redisPub.publish(
                 replyChannel,
@@ -47,11 +52,10 @@ export class OperatorGameController implements OnModuleInit {
               );
               break;
             }
+            default:
+              break;
           }
         }
-
-        default:
-          break;
       }
     });
   }

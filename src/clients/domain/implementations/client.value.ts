@@ -1,5 +1,5 @@
-import { randomUUID } from 'crypto';
 import { ClientEntity } from '../entities/client.entity';
+import { GenerateId } from 'src/shared/helpers/uuid-generator';
 
 export class Client implements ClientEntity {
   name: string;
@@ -29,6 +29,6 @@ export class Client implements ClientEntity {
     this.urlGames = data.urlGames;
     this.status = true;
     this.available = true;
-    this.token = randomUUID();
+    this.token = new GenerateId().uuid;
   }
 }

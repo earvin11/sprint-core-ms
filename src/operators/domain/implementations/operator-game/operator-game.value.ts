@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { GenerateId } from 'src/shared/helpers/uuid-generator';
 import { OperatorGameEntity } from '../../entities/operator-game/operator-game.entity';
 
 export class OperatorGame implements OperatorGameEntity {
@@ -11,7 +11,7 @@ export class OperatorGame implements OperatorGameEntity {
   constructor(data: OperatorGameEntity) {
     this.operator = data.operator;
     this.game = data.game;
-    this.uuid = randomUUID();
+    this.uuid = new GenerateId().uuid;
     this.currencies = data.currencies;
     this.order = data.order;
   }

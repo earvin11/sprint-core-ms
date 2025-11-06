@@ -1,6 +1,6 @@
-import { randomUUID } from 'crypto';
 import { GameTypes } from '../entities/game.entity';
 import { RouletteEntity } from '../entities/roulette.entity';
+import { GenerateId } from 'src/shared/helpers/uuid-generator';
 
 export class Roulette implements RouletteEntity {
   public alertEmails?: string[];
@@ -50,7 +50,7 @@ export class Roulette implements RouletteEntity {
     this.name = data.name;
     this.providerId = data.providerId;
     this.urlTransmision = data.urlTransmision;
-    this.uuid = randomUUID();
+    this.uuid = new GenerateId().uuid;
     this.saveRecordings = data.saveRecordings;
 
     this.calle = data.calle;
