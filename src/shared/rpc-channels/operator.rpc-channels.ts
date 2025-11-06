@@ -9,8 +9,6 @@ export enum OperatorRpcChannelsEnum {
 
 const prefixOpGame = 'operator-game';
 export enum OperatorGameRpcChannelsEnum {
-  FIND_GAMES_ASSIGNED_BY_OPERATOR = 'find-games-assigned-by-operator',
-  ASSIGN_GAME = 'assign-game',
   CREATE = `${prefixOpGame}-create`,
   FIND_ALL = `${prefixOpGame}-all`,
   FIND_BY_ID = `${prefixOpGame}-by-id`,
