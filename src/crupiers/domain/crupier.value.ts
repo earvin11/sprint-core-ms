@@ -1,5 +1,5 @@
+import { GenerateId } from 'src/shared/helpers/uuid-generator';
 import { CrupierEntity } from './crupier.entity';
-import { randomUUID } from 'crypto';
 
 export class Crupier implements CrupierEntity {
   name: string;
@@ -10,7 +10,7 @@ export class Crupier implements CrupierEntity {
   constructor(data: CrupierEntity) {
     this.name = data.name;
     this.serialId = data.serialId;
-    this.uuid = randomUUID();
+    this.uuid = new GenerateId().uuid;
     this.photoUrl = data.photoUrl;
   }
 }

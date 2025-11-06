@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { GenerateId } from 'src/shared/helpers/uuid-generator';
 import { GameEntity, GameTypes } from '../entities/game.entity';
 
 export class Game implements GameEntity {
@@ -19,6 +19,6 @@ export class Game implements GameEntity {
     this.providerId = data.providerId;
     this.type = data.type;
     this.urlTransmision = data.urlTransmision;
-    this.uuid = randomUUID();
+    this.uuid = new GenerateId().uuid;
   }
 }

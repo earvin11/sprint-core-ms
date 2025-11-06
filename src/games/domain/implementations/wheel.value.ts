@@ -1,6 +1,6 @@
-import { randomUUID } from 'crypto';
 import { GameTypes } from '../entities/game.entity';
 import { WheelEntity } from '../entities/wheel.entity';
+import { GenerateId } from 'src/shared/helpers/uuid-generator';
 
 export class Wheel implements WheelEntity {
   public aditionalTime?: number | undefined;
@@ -35,6 +35,6 @@ export class Wheel implements WheelEntity {
     this.urlTransmision = data.urlTransmision;
     this.logo = data.logo;
     this.alwaysOpen = data.alwaysOpen;
-    this.uuid = randomUUID();
+    this.uuid = new GenerateId().uuid;
   }
 }

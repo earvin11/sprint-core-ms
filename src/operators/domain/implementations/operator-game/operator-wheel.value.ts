@@ -1,8 +1,8 @@
-import { randomUUID } from 'crypto';
 import {
   ConfigPayment,
   OperatorWheelEntity,
 } from '../../entities/operator-game/operator-wheel.entity';
+import { GenerateId } from 'src/shared/helpers/uuid-generator';
 
 export class OperatorWheel implements OperatorWheelEntity {
   public configPayment: ConfigPayment[];
@@ -16,7 +16,7 @@ export class OperatorWheel implements OperatorWheelEntity {
     this.configPayment = data.configPayment;
     this.operator = data.operator;
     this.game = data.game;
-    this.uuid = randomUUID();
+    this.uuid = new GenerateId().uuid;
     this.currencies = data.currencies;
     this.order = data.order;
   }

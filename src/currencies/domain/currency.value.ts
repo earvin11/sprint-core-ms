@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { GenerateId } from 'src/shared/helpers/uuid-generator';
 import { CurrencyEntity } from './currency.entity';
 
 export class Currency implements CurrencyEntity {
@@ -17,6 +17,6 @@ export class Currency implements CurrencyEntity {
     this.usdExchange = data.usdExchange;
     this.exchangeApi = data.exchangeApi;
     this.status = true;
-    this.uuid = randomUUID();
+    this.uuid = new GenerateId().uuid;
   }
 }
