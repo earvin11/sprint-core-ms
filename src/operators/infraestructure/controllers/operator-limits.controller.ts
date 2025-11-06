@@ -22,9 +22,15 @@ export class OperatorLimitsController implements OnModuleInit {
   ) {}
   onModuleInit() {
     //TODO: separar channels
-    this.redisSub.subscribe(...operatorLimitsRpcChannels, () => {
-      this.loggerPort.log(`Escuchando: ${operatorLimitsRpcChannels}`);
-    });
+    this.redisSub
+      .subscribe(...operatorLimitsRpcChannels, () => {
+        this.loggerPort.log(`Escuchando: ${operatorLimitsRpcChannels}`);
+      })
+      .catch((error) => {
+        this.loggerPort.error(
+          `Error al suscribirse a los canales de operadores: ${error.message}`,
+        );
+      });
     this.redisSub.on('message', async (channel, message) => {
       const payload = JSON.parse(message);
       const { correlationId, data, replyChannel } = payload;
@@ -50,6 +56,7 @@ export class OperatorLimitsController implements OnModuleInit {
               break;
             }
           }
+          break;
         }
         case OperatorLimitsRpcChannelsEnum.FIND_ALL: {
           const resp = await this.operatorLimitsUseCases.findAll();
