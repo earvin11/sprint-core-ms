@@ -8,6 +8,7 @@ export enum OperatorRpcChannelsEnum {
 }
 
 export enum OperatorGameRpcChannelsEnum {
+  FIND_GAMES_ASSIGNED_BY_OPERATOR = 'find-games-assigned-by-operator',
   ASSIGN_GAME = 'assign-game',
 }
 
