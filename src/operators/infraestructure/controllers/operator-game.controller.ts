@@ -61,10 +61,14 @@ export class OperatorGameController implements OnModuleInit {
           break;
         }
 
-        case OperatorGameRpcChannelsEnum.FIND_GAMES_ASSIGNED_BY_OPERATOR: {
+        case OperatorGameRpcChannelsEnum.FIND_BY_OPERATOR: {
           switch (data.typeGame) {
             case GameTypes.ROULETTE: {
-              // const resp = await this.operatorRouletteUseCases.create(data);
+              console.log('DATA', data);
+              const resp = await this.operatorRouletteUseCases.findOneBy({
+                operator: data.operator,
+              });
+              console.log('RESPUESTA', resp);
               // await this.redisPub.publish(
               //   replyChannel,
               //   JSON.stringify({ correlationId, data: resp }),
