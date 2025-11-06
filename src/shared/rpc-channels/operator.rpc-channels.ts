@@ -7,12 +7,26 @@ export enum OperatorRpcChannelsEnum {
   DELETE = 'delete operator',
 }
 
+const prefixOpGame = 'operator-game';
 export enum OperatorGameRpcChannelsEnum {
-  ASSIGN_GAME = 'assign-game',
+  CREATE = `${prefixOpGame}-create`,
+  FIND_ALL = `${prefixOpGame}-all`,
+  FIND_BY_ID = `${prefixOpGame}-by-id`,
+  FIND_BY_OPERATOR = `${prefixOpGame}-find-by-operator`,
+  FIND_BY_OPERATOR_GAME = `${prefixOpGame}-find-by-operator-game`,
+  UPDATE_BY_OPERATOR_GAME = `${prefixOpGame}-update-by-operator-game`,
+  DELETE = `${prefixOpGame}-delete`,
 }
 
+const prefixOpLimit = 'operator-limits';
 export enum OperatorLimitsRpcChannelsEnum {
-  CREATE = 'operator-limit-create',
+  CREATE = `${prefixOpLimit}-create`,
+  FIND_ALL = `${prefixOpLimit}-all`,
+  FIND_BY_ID = `${prefixOpLimit}-by-id`,
+  FIND_BY_OPERATOR = `${prefixOpLimit}-find-by-operator`,
+  FIND_BY_OPERATOR_CURRENCY = `${prefixOpLimit}-find-by-operator-currency`,
+  UPDATE_BY_OPERATOR_CURRENCY = `${prefixOpLimit}-update-by-operator-currency`,
+  DELETE = `${prefixOpLimit}-delete`,
 }
 
 const values = Object.values(OperatorRpcChannelsEnum).filter(

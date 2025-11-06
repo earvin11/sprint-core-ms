@@ -36,7 +36,7 @@ export class OperatorGameController implements OnModuleInit {
       const { correlationId, data, replyChannel } = payload;
 
       switch (channel) {
-        case OperatorGameRpcChannelsEnum.ASSIGN_GAME: {
+        case OperatorGameRpcChannelsEnum.CREATE: {
           switch (data.typeGame) {
             case GameTypes.ROULETTE: {
               const resp = await this.operatorRouletteUseCases.create(data);
