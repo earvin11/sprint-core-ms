@@ -30,6 +30,13 @@ import {
 import { OperatorLimitsRouletteSchema } from './models/operator-limits/operator-limits-roulette.model';
 import { OperatorLimitsWheelSchema } from './models/operator-limits/operator-limits-wheel.model';
 import { OperatorLimitsTypesEnum } from '../domain/entities/operator-limits/operator-limits.entity';
+import { OperatorLimitsRouletteMongoRepository } from './repositories/operator-limits/operator-limits-roulette.mongo-repository';
+import { OperatorLimitsWheelRepository } from '../domain/repositories/operator-limits/operator-limits-wheel.repository';
+import { OperatorLimitsWheelMongoRepository } from './repositories/operator-limits/operator-limits-wheel.mongo-repository';
+import { OperatorLimitsRouletteUseCases } from '../application/operator-limits/operator-limits-roulette.use-cases';
+import { OperatorLimitsWheelUseCases } from '../application/operator-limits/operator-limits-wheel.use-cases';
+import { OperatorLimitsRouletteRepository } from '../domain/repositories/operator-limits/operator-limits-roulette.repository';
+import { OperatorLimitsController } from './controllers/operator-limits.controller';
 
 @Module({
   imports: [
@@ -73,9 +80,13 @@ import { OperatorLimitsTypesEnum } from '../domain/entities/operator-limits/oper
     OperatorMongoRepository,
     OperatorRouletteMongoRepository,
     OperatorWheelMongoRepository,
+    OperatorLimitsRouletteMongoRepository,
+    OperatorLimitsWheelMongoRepository,
     OperatorUseCases,
     OperatorRouletteUseCases,
     OperatorWheelUseCases,
+    OperatorLimitsRouletteUseCases,
+    OperatorLimitsWheelUseCases,
     {
       provide: OperatorRepository,
       useExisting: OperatorMongoRepository,
@@ -88,7 +99,19 @@ import { OperatorLimitsTypesEnum } from '../domain/entities/operator-limits/oper
       provide: OperatorWheelRepository,
       useExisting: OperatorWheelMongoRepository,
     },
+    {
+      provide: OperatorLimitsRouletteRepository,
+      useExisting: OperatorLimitsRouletteMongoRepository,
+    },
+    {
+      provide: OperatorLimitsWheelRepository,
+      useExisting: OperatorLimitsWheelMongoRepository,
+    },
   ],
-  controllers: [OperatorController, OperatorGameController],
+  controllers: [
+    OperatorController,
+    OperatorGameController,
+    OperatorLimitsController,
+  ],
 })
 export class OperatorModule {}

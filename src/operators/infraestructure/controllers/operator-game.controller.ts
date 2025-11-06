@@ -5,6 +5,8 @@ import { LoggerPort } from 'src/logging/domain/logger.port';
 import { OperatorRouletteUseCases } from 'src/operators/application/operator-game/operator-roulette.use-cases';
 import { OperatorWheelUseCases } from 'src/operators/application/operator-game/operator-wheel.use-cases';
 import {
+  operatorGameRpcChannels,
+  OperatorGameRpcChannelsEnum,
   operatorRpcChannels,
   OperatorRpcChannelsEnum,
 } from 'src/shared/rpc-channels/operator.rpc-channels';
@@ -21,8 +23,8 @@ export class OperatorGameController implements OnModuleInit {
   onModuleInit() {
     //TODO: separar channels
     this.redisSub
-      .subscribe(...operatorRpcChannels, () => {
-        this.loggerPort.log(`Escuchando: ${operatorRpcChannels}`);
+      .subscribe(...operatorGameRpcChannels, () => {
+        this.loggerPort.log(`Escuchando: ${operatorGameRpcChannels}`);
       })
       .catch((error) => {
         this.loggerPort.error(
@@ -34,7 +36,7 @@ export class OperatorGameController implements OnModuleInit {
       const { correlationId, data, replyChannel } = payload;
 
       switch (channel) {
-        case OperatorRpcChannelsEnum.ASSIGN_GAME: {
+        case OperatorGameRpcChannelsEnum.ASSIGN_GAME: {
           switch (data.typeGame) {
             case GameTypes.ROULETTE: {
               const resp = await this.operatorRouletteUseCases.create(data);

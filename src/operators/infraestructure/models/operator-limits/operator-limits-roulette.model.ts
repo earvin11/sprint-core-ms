@@ -11,29 +11,137 @@ export class OperatorLimitsRoulette
   extends OperatorLimits
   implements OperatorLimitsRouletteEntity
 {
-  @Prop()
+  @Prop({
+    type: {
+      min: {
+        type: Number,
+      },
+      max: {
+        type: Number,
+      },
+    },
+  })
   pleno: LimitBet;
-  @Prop()
+  @Prop({
+    type: {
+      min: {
+        type: Number,
+      },
+      max: {
+        type: Number,
+      },
+    },
+  })
   semipleno: LimitBet;
-  @Prop()
+  @Prop({
+    type: {
+      min: {
+        type: Number,
+      },
+      max: {
+        type: Number,
+      },
+    },
+  })
   cuadro: LimitBet;
-  @Prop()
+  @Prop({
+    type: {
+      min: {
+        type: Number,
+      },
+      max: {
+        type: Number,
+      },
+    },
+  })
   calle: LimitBet;
-  @Prop()
+  @Prop({
+    type: {
+      min: {
+        type: Number,
+      },
+      max: {
+        type: Number,
+      },
+    },
+  })
   linea: LimitBet;
-  @Prop()
+  @Prop({
+    type: {
+      min: {
+        type: Number,
+      },
+      max: {
+        type: Number,
+      },
+    },
+  })
   columna: LimitBet;
-  @Prop()
+  @Prop({
+    type: {
+      min: {
+        type: Number,
+      },
+      max: {
+        type: Number,
+      },
+    },
+  })
   docena: LimitBet;
-  @Prop()
+  @Prop({
+    type: {
+      min: {
+        type: Number,
+      },
+      max: {
+        type: Number,
+      },
+    },
+  })
   cubre: LimitBet;
-  @Prop()
+  @Prop({
+    type: {
+      min: {
+        type: Number,
+      },
+      max: {
+        type: Number,
+      },
+    },
+  })
   chanceSimple: LimitBet;
-  @Prop()
+  @Prop({
+    type: {
+      min: {
+        type: Number,
+      },
+      max: {
+        type: Number,
+      },
+    },
+  })
   even_odd: LimitBet;
-  @Prop()
+  @Prop({
+    type: {
+      min: {
+        type: Number,
+      },
+      max: {
+        type: Number,
+      },
+    },
+  })
   color: LimitBet;
-  @Prop()
+  @Prop({
+    type: {
+      min: {
+        type: Number,
+      },
+      max: {
+        type: Number,
+      },
+    },
+  })
   specialCalle: LimitBet;
 }
 
