@@ -57,6 +57,37 @@ export class OperatorGameController implements OnModuleInit {
             default:
               break;
           }
+
+          break;
+        }
+
+        case OperatorGameRpcChannelsEnum.FIND_BY_OPERATOR: {
+          switch (data.typeGame) {
+            case GameTypes.ROULETTE: {
+              console.log('DATA', data);
+              const resp = await this.operatorRouletteUseCases.findOneBy({
+                operator: data.operator,
+              });
+              console.log('RESPUESTA', resp);
+              // await this.redisPub.publish(
+              //   replyChannel,
+              //   JSON.stringify({ correlationId, data: resp }),
+              // );
+              break;
+            }
+            case GameTypes.WHEEL: {
+              // const resp = await this.operatorWheelUseCases.create(data);
+              // await this.redisPub.publish(
+              //   replyChannel,
+              //   JSON.stringify({ correlationId, data: resp }),
+              // );
+              break;
+            }
+            default:
+              break;
+          }
+
+          break;
         }
       }
     });
