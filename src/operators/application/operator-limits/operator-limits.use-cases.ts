@@ -48,10 +48,14 @@ export class OperatorLimitsUseCases {
 
   public findManyBy = async (
     filter: Record<string, any>,
+    page?: number,
+    limit?: number,
     populateFields?: string | string[],
   ) => {
     const data = await this.operatorlimitsRepository.findManyBy(
       filter,
+      page,
+      limit,
       populateFields,
     );
     return data;

@@ -17,6 +17,8 @@ export abstract class OperatorLimitsRepository {
   ): Promise<OperatorLimitsEntity | null>;
   abstract findManyBy(
     filter: Record<string, any>,
+    page?: number,
+    limit?: number,
     populateFields?: string | string[],
   ): Promise<OperatorLimitsEntity[] | []>;
   abstract update(
