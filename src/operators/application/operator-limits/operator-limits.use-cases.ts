@@ -1,19 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { OperatorLimitsRouletteEntity } from 'src/operators/domain/entities/operator-limits/operator-limits-roulette.entity';
-import { OperatorLimitsRouletteRepository } from 'src/operators/domain/repositories/operator-limits/operator-limits-roulette.repository';
+import { OperatorLimitsEntity } from 'src/operators/domain/entities/operator-limits/operator-limits.entity';
+import { OperatorLimitsRepository } from 'src/operators/domain/repositories/operator-limits/operator-limits.repository';
 import { OperatorLimitsRoulette } from 'src/operators/infraestructure/models/operator-limits/operator-limits-roulette.model';
 
 @Injectable()
-export class OperatorLimitsRouletteUseCases {
+export class OperatorLimitsUseCases {
   constructor(
-    private readonly operatorlimitsRouletteRepository: OperatorLimitsRouletteRepository,
+    private readonly operatorlimitsRepository: OperatorLimitsRepository,
   ) {}
 
-  public create = async (data: OperatorLimitsRouletteEntity) => {
+  public create = async (data: OperatorLimitsEntity) => {
     const newOpLimitRoulette = new OperatorLimitsRoulette(data);
-    return await this.operatorlimitsRouletteRepository.create(
-      newOpLimitRoulette,
-    );
+    return await this.operatorlimitsRepository.create(newOpLimitRoulette);
   };
 
   public findAll = async (
@@ -21,7 +19,7 @@ export class OperatorLimitsRouletteUseCases {
     limit: number = 10,
     populateFields?: string | string[],
   ) => {
-    const data = await this.operatorlimitsRouletteRepository.findAll(
+    const data = await this.operatorlimitsRepository.findAll(
       page,
       limit,
       populateFields,
@@ -30,7 +28,7 @@ export class OperatorLimitsRouletteUseCases {
   };
 
   public findById = async (id: string, populateFields?: string | string[]) => {
-    const data = await this.operatorlimitsRouletteRepository.findById(
+    const data = await this.operatorlimitsRepository.findById(
       id,
       populateFields,
     );
@@ -41,7 +39,7 @@ export class OperatorLimitsRouletteUseCases {
     filter: Record<string, any>,
     populateFields?: string | string[],
   ) => {
-    const data = await this.operatorlimitsRouletteRepository.findOneBy(
+    const data = await this.operatorlimitsRepository.findOneBy(
       filter,
       populateFields,
     );
@@ -52,7 +50,7 @@ export class OperatorLimitsRouletteUseCases {
     filter: Record<string, any>,
     populateFields?: string | string[],
   ) => {
-    const data = await this.operatorlimitsRouletteRepository.findManyBy(
+    const data = await this.operatorlimitsRepository.findManyBy(
       filter,
       populateFields,
     );
@@ -61,17 +59,14 @@ export class OperatorLimitsRouletteUseCases {
 
   public update = async (
     id: string,
-    dataToUpdate: Partial<OperatorLimitsRouletteEntity>,
+    dataToUpdate: Partial<OperatorLimitsEntity>,
   ) => {
-    const data = await this.operatorlimitsRouletteRepository.update(
-      id,
-      dataToUpdate,
-    );
+    const data = await this.operatorlimitsRepository.update(id, dataToUpdate);
     return data;
   };
 
   public remove = async (id: string) => {
-    const data = await this.operatorlimitsRouletteRepository.remove(id);
+    const data = await this.operatorlimitsRepository.remove(id);
     return data;
   };
 }

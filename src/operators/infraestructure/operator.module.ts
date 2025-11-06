@@ -37,6 +37,9 @@ import { OperatorLimitsRouletteUseCases } from '../application/operator-limits/o
 import { OperatorLimitsWheelUseCases } from '../application/operator-limits/operator-limits-wheel.use-cases';
 import { OperatorLimitsRouletteRepository } from '../domain/repositories/operator-limits/operator-limits-roulette.repository';
 import { OperatorLimitsController } from './controllers/operator-limits.controller';
+import { OperatorLimitsUseCases } from '../application/operator-limits/operator-limits.use-cases';
+import { OperatorLimitsMongoRepository } from './repositories/operator-limits/operator-limits.mongo-repository';
+import { OperatorLimitsRepository } from '../domain/repositories/operator-limits/operator-limits.repository';
 
 @Module({
   imports: [
@@ -80,11 +83,13 @@ import { OperatorLimitsController } from './controllers/operator-limits.controll
     OperatorMongoRepository,
     OperatorRouletteMongoRepository,
     OperatorWheelMongoRepository,
+    OperatorLimitsMongoRepository,
     OperatorLimitsRouletteMongoRepository,
     OperatorLimitsWheelMongoRepository,
     OperatorUseCases,
     OperatorRouletteUseCases,
     OperatorWheelUseCases,
+    OperatorLimitsUseCases,
     OperatorLimitsRouletteUseCases,
     OperatorLimitsWheelUseCases,
     {
@@ -98,6 +103,10 @@ import { OperatorLimitsController } from './controllers/operator-limits.controll
     {
       provide: OperatorWheelRepository,
       useExisting: OperatorWheelMongoRepository,
+    },
+    {
+      provide: OperatorLimitsRepository,
+      useExisting: OperatorLimitsMongoRepository,
     },
     {
       provide: OperatorLimitsRouletteRepository,
