@@ -35,5 +35,6 @@ export class OperatorRoulette implements OperatorRouletteEntity {
     this.template = data.template;
     this.logo = data.logo;
     this.currencies = data.currencies;
+    this.operator = data.operator;
   }
 }
