@@ -8,8 +8,17 @@ export enum OperatorRpcChannelsEnum {
   ASSIGN_GAME = 'assign-game',
 }
 
+export enum OperatorLimitsRpcChannelsEnum {
+  CREATE = 'operator-limit-create',
+}
+
 const values = Object.values(OperatorRpcChannelsEnum).filter(
   (v) => typeof v === 'string',
 );
 
+const valuesOpLimit = Object.values(OperatorRpcChannelsEnum).filter(
+  (v) => typeof v === 'string',
+);
+
 export const operatorRpcChannels = [...values];
+export const operatorLimitsRpcChannels = [...valuesOpLimit];

@@ -23,6 +23,13 @@ import { OperatorWheelUseCases } from '../application/operator-game/operator-whe
 import { OperatorRouletteUseCases } from '../application/operator-game/operator-roulette.use-cases';
 import { OperatorGameController } from './controllers/operator-game.controller';
 import { OperatorGameTypesEnum } from '../domain/entities/operator-game/operator-game.entity';
+import {
+  OperatorLimits,
+  OperatorLimitsSchema,
+} from './models/operator-limits/operator-limits.model';
+import { OperatorLimitsRouletteSchema } from './models/operator-limits/operator-limits-roulette.model';
+import { OperatorLimitsWheelSchema } from './models/operator-limits/operator-limits-wheel.model';
+import { OperatorLimitsTypesEnum } from '../domain/entities/operator-limits/operator-limits.entity';
 
 @Module({
   imports: [
@@ -35,8 +42,25 @@ import { OperatorGameTypesEnum } from '../domain/entities/operator-game/operator
         name: OperatorGame.name,
         schema: OperatorGameSchema,
         discriminators: [
-          { name: OperatorGameTypesEnum.OP_ROULETTE, schema: OperatorRouletteSchema },
+          {
+            name: OperatorGameTypesEnum.OP_ROULETTE,
+            schema: OperatorRouletteSchema,
+          },
           { name: OperatorGameTypesEnum.OP_WHEEL, schema: OperatorWheelSchema },
+        ],
+      },
+      {
+        name: OperatorLimits.name,
+        schema: OperatorLimitsSchema,
+        discriminators: [
+          {
+            name: OperatorLimitsTypesEnum.ROULETTE,
+            schema: OperatorLimitsRouletteSchema,
+          },
+          {
+            name: OperatorLimitsTypesEnum.WHEEL,
+            schema: OperatorLimitsWheelSchema,
+          },
         ],
       },
     ]),
