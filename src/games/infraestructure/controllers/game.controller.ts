@@ -83,11 +83,28 @@ export class GameController {
         }
 
         case GameRpcChannelsEnum.UPDATE: {
-          const resp = await this.gameUseCases.update(data.id, data.data);
-          await this.redisPub.publish(
-            replyChannel,
-            JSON.stringify({ correlationId, data: resp }),
-          );
+          const { typeGame, id, ...rest } = data;
+          switch (data.typeGame) {
+            case GameTypes.ROULETTE: {
+              const resp = await this.rouletteUseCases.update(id, rest);
+              await this.redisPub.publish(
+                replyChannel,
+                JSON.stringify({ correlationId, data: resp }),
+              );
+              break;
+            }
+            case GameTypes.WHEEL: {
+              const resp = await this.wheelUseCases.update(id, rest);
+              await this.redisPub.publish(
+                replyChannel,
+                JSON.stringify({ correlationId, data: resp }),
+              );
+              break;
+            }
+            default:
+              break;
+          }
+
           break;
         }
 

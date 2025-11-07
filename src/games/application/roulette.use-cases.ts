@@ -44,6 +44,13 @@ export class RouletteUseCases {
     await this.rouletteRepository.updateMany(filter, data);
   };
 
+  public updateOne = async (
+    filter: Record<string, any>,
+    data: Partial<RouletteEntity>,
+  ) => {
+    return await this.rouletteRepository.updateOne(filter, data);
+  };
+
   public remove = async (id: string) => {
     const data = await this.rouletteRepository.remove(id);
     return data;

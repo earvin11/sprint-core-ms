@@ -18,5 +18,9 @@ export abstract class WheelRepository {
     filter: Record<string, any>,
     data: Partial<WheelEntity>,
   ): Promise<void>;
+  abstract updateOne(
+    filter: Record<string, any>,
+    data: Partial<WheelEntity>,
+  ): Promise<WheelEntity | null>;
   abstract remove(id: string): Promise<WheelEntity | null>;
 }

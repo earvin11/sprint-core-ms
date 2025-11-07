@@ -44,6 +44,13 @@ export class WheelUseCases {
     await this.wheelRepository.updateMany(filter, data);
   };
 
+  public updateOne = async (
+    filter: Record<string, any>,
+    data: Partial<WheelEntity>,
+  ) => {
+    return await this.wheelRepository.updateOne(filter, data);
+  };
+
   public remove = async (id: string) => {
     const data = await this.wheelRepository.remove(id);
     return data;

@@ -59,6 +59,14 @@ export class RouletteMongoRepository implements RouletteRepository {
   ) => {
     await this.rouletteModel.updateMany(filter, data);
   };
+  public updateOne = async (
+    filter: Record<string, any>,
+    data: Partial<RouletteEntity>,
+  ): Promise<RouletteEntity | null> => {
+    return await this.rouletteModel.findOneAndUpdate(filter, data, {
+      new: true,
+    });
+  };
   public remove = async (id: string): Promise<RouletteEntity | null> => {
     console.log({ id });
     throw new Error('Method not implemented.');

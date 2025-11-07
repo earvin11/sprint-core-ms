@@ -22,5 +22,9 @@ export abstract class RouletteRepository {
     filter: Record<string, any>,
     data: Partial<RouletteEntity>,
   ): Promise<void>;
+  abstract updateOne(
+    filter: Record<string, any>,
+    data: Partial<RouletteEntity>,
+  ): Promise<RouletteEntity | null>;
   abstract remove(id: string): Promise<RouletteEntity | null>;
 }

@@ -58,6 +58,12 @@ export class WheelMongoRepository implements WheelRepository {
   ) => {
     await this.wheelModel.updateMany(filter, data);
   };
+  public updateOne = async (
+    filter: Record<string, any>,
+    data: Partial<WheelEntity>,
+  ): Promise<WheelEntity | null> => {
+    return await this.wheelModel.findOneAndUpdate(filter, data, { new: true });
+  };
   public remove = async (id: string): Promise<any | null> => {
     console.log({ id });
     throw new Error('Method not implemented.');
