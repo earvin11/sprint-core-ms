@@ -71,7 +71,7 @@ export class OperatorGameController implements OnModuleInit {
         }
 
         case OperatorGameRpcChannelsEnum.FIND_BY_OPERATOR: {
-          const resp = await this.operatorGameUseCases.findOneBy({
+          const resp = await this.operatorGameUseCases.findManyBy({
             operator: data.operator,
           });
           await this.redisPub.publish(
