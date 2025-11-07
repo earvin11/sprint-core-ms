@@ -58,12 +58,16 @@ export class OperatorLimitsMongoRepository implements OperatorLimitsRepository {
   }
   async findManyBy(
     filter: Record<string, any>,
+    page: number = 1,
+    limit: number = 10,
     populateFields?: string | string[],
   ): Promise<OperatorLimitsEntity[] | []> {
     let query = this.operatorLimitModel.find(filter);
     if (populateFields) {
       query = query.populate(populateFields);
     }
+
+    query.limit(limit).skip((page - 1) * limit);
 
     const data = await query.exec();
     return data;

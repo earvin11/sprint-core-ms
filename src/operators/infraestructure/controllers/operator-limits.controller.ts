@@ -75,9 +75,13 @@ export class OperatorLimitsController implements OnModuleInit {
           break;
         }
         case OperatorLimitsRpcChannelsEnum.FIND_BY_OPERATOR: {
-          const resp = await this.operatorLimitsUseCases.findOneBy({
-            operator: data.operator,
-          });
+          const resp = await this.operatorLimitsUseCases.findManyBy(
+            {
+              operator: data.operator,
+            },
+            data.page,
+            data.limit,
+          );
           await this.redisPub.publish(
             replyChannel,
             JSON.stringify({ correlationId, data: resp }),
