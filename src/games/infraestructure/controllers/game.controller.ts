@@ -22,36 +22,38 @@ export class GameController {
   ) {}
 
   onModuleInit() {
-    this.redisSub.subscribe(...gameRpcChannels, () => {
-      this.loggerPort.log(`Escuchando: ${gameRpcChannels}`);
-    });
+    this.redisSub
+      .subscribe(...gameRpcChannels, () => {
+        this.loggerPort.log(`Escuchando: ${gameRpcChannels}`);
+      })
+      .catch((error) => {
+        this.loggerPort.error(
+          `Error al suscribirse a los canales de operadores: ${error.message}`,
+        );
+      });
     this.redisSub.on('message', async (channel, message) => {
       const payload = JSON.parse(message);
       const { correlationId, data, replyChannel } = payload;
 
       switch (channel) {
         case GameRpcChannelsEnum.CREATE: {
-          switch (data.typeGame) {
+          let resp;
+          switch (data.type) {
             case GameTypes.ROULETTE: {
-              const resp = await this.rouletteUseCases.create(data);
-              await this.redisPub.publish(
-                replyChannel,
-                JSON.stringify({ correlationId, data: resp }),
-              );
+              resp = await this.rouletteUseCases.create(data);
+
               break;
             }
             case GameTypes.WHEEL: {
-              const resp = await this.wheelUseCases.create(data);
-              await this.redisPub.publish(
-                replyChannel,
-                JSON.stringify({ correlationId, data: resp }),
-              );
+              resp = await this.wheelUseCases.create(data);
+
               break;
             }
-            default:
-              break;
           }
-
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
           break;
         }
 
@@ -83,28 +85,26 @@ export class GameController {
         }
 
         case GameRpcChannelsEnum.UPDATE: {
-          const { typeGame, id, ...rest } = data;
-          switch (data.typeGame) {
+          let resp;
+          console.log({ channel, data });
+          switch (data.data.type) {
             case GameTypes.ROULETTE: {
-              const resp = await this.rouletteUseCases.update(id, rest);
-              await this.redisPub.publish(
-                replyChannel,
-                JSON.stringify({ correlationId, data: resp }),
-              );
+              resp = await this.rouletteUseCases.update(data.id, {
+                ...data.data,
+              });
+              console.log({ resp });
               break;
             }
             case GameTypes.WHEEL: {
-              const resp = await this.wheelUseCases.update(id, rest);
-              await this.redisPub.publish(
-                replyChannel,
-                JSON.stringify({ correlationId, data: resp }),
-              );
+              resp = await this.wheelUseCases.update(data.id, { ...data.data });
+
               break;
             }
-            default:
-              break;
           }
-
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
           break;
         }
 

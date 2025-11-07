@@ -5,7 +5,7 @@ import { GameEntity } from '../domain/entities/game.entity';
 @Injectable()
 export class GameUseCases {
   constructor(private readonly gameRepository: GameRepository) {}
-  public findAll = async (page: number = 1, limit: number = 10) => {
+  public findAll = async (page: number = 0, limit: number = 10) => {
     const data = await this.gameRepository.findAll(page, limit);
     return data;
   };
