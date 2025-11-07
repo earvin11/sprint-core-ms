@@ -21,7 +21,6 @@ export class OperatorGameController implements OnModuleInit {
     private readonly loggerPort: LoggerPort,
   ) {}
   onModuleInit() {
-    //TODO: separar channels
     this.redisSub
       .subscribe(...operatorGameRpcChannels, () => {
         this.loggerPort.log(`Escuchando: ${operatorGameRpcChannels}`);
@@ -94,15 +93,33 @@ export class OperatorGameController implements OnModuleInit {
         }
 
         case OperatorGameRpcChannelsEnum.UPDATE_BY_OPERATOR_GAME: {
-          const { operator, game, ...rest } = data;
-          const resp = await this.operatorGameUseCases.updateOne(
-            { operator, game },
-            rest,
-          );
-          await this.redisPub.publish(
-            replyChannel,
-            JSON.stringify({ correlationId, data: resp }),
-          );
+          const { typeGame, operator, game, ...rest } = data;
+          switch (typeGame) {
+            case GameTypes.ROULETTE: {
+              const resp = await this.operatorRouletteUseCases.updateOne(
+                { operator, game },
+                rest,
+              );
+              await this.redisPub.publish(
+                replyChannel,
+                JSON.stringify({ correlationId, data: resp }),
+              );
+              break;
+            }
+            case GameTypes.WHEEL: {
+              const resp = await this.operatorWheelUseCases.updateOne(
+                { operator, game },
+                rest,
+              );
+              await this.redisPub.publish(
+                replyChannel,
+                JSON.stringify({ correlationId, data: resp }),
+              );
+              break;
+            }
+            default:
+              break;
+          }
           break;
         }
 

@@ -25,5 +25,9 @@ export abstract class OperatorRouletteRepository {
     id: string,
     data: Partial<OperatorRouletteEntity>,
   ): Promise<OperatorRouletteEntity | null>;
+  abstract updateOne(
+    filter: Record<string, any>,
+    data: Partial<OperatorRouletteEntity>,
+  ): Promise<OperatorRouletteEntity | null>;
   abstract remove(id: string): Promise<OperatorRouletteEntity | null>;
 }

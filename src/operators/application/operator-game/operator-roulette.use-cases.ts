@@ -65,6 +65,13 @@ export class OperatorRouletteUseCases {
     return data;
   };
 
+  public updateOne = async (
+    filter: Record<string, any>,
+    data: Partial<OperatorRouletteEntity>,
+  ) => {
+    return await this.operatorRouletteRepository.updateOne(filter, data);
+  };
+
   public remove = async (id: string) => {
     const data = await this.operatorRouletteRepository.remove(id);
     return data;

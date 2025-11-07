@@ -26,6 +26,6 @@ export abstract class OperatorGameRepository {
   abstract updateOne(
     filter: Record<string, any>,
     data: Partial<OperatorGameEntity>,
-  );
+  ): Promise<OperatorGameEntity | null>;
   abstract remove(id: string): Promise<OperatorGameEntity | null>;
 }

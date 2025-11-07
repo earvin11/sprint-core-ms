@@ -23,5 +23,9 @@ export abstract class OperatorWheelRepository {
     id: string,
     data: Partial<OperatorWheelEntity>,
   ): Promise<OperatorWheelEntity | null>;
+  abstract updateOne(
+    filter: Record<string, any>,
+    data: Partial<OperatorWheelEntity>,
+  ): Promise<OperatorWheelEntity | null>;
   abstract remove(id: string): Promise<OperatorWheelEntity | null>;
 }
