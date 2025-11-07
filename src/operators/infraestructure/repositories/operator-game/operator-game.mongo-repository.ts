@@ -82,6 +82,14 @@ export class OperatorGameMongoRepository implements OperatorGameRepository {
     );
     return data;
   }
+  async updateOne(
+    filter: Record<string, any>,
+    data: Partial<OperatorGameEntity>,
+  ) {
+    return await this.operatorGameModel.findOneAndUpdate(filter, data, {
+      new: true,
+    });
+  }
   async remove(id: string): Promise<OperatorGameEntity | null> {
     const data = await this.operatorGameModel.findByIdAndUpdate(
       id,

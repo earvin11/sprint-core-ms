@@ -100,8 +100,15 @@ export class OperatorLimitsController implements OnModuleInit {
           break;
         }
         case OperatorLimitsRpcChannelsEnum.UPDATE_BY_OPERATOR_CURRENCY: {
-          // const resp = await this.operatorLimitsUseCases.update()
-          // await this.redisPub.publish(replyChannel, JSON.stringify({ correlationId, data: resp }));
+          const { operator, currency, ...rest } = data;
+          const resp = await this.operatorLimitsUseCases.updateOne(
+            { operator, currency },
+            rest,
+          );
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
           break;
         }
         case OperatorLimitsRpcChannelsEnum.DELETE: {

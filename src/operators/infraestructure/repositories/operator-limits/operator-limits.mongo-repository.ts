@@ -85,6 +85,15 @@ export class OperatorLimitsMongoRepository implements OperatorLimitsRepository {
     );
     return data;
   }
+  async updateOne(
+    filter: Record<string, any>,
+    data: Partial<OperatorLimitsEntity>,
+  ): Promise<OperatorLimitsEntity | null> {
+    const resp = await this.operatorLimitModel.findOneAndUpdate(filter, data, {
+      new: true,
+    });
+    return resp;
+  }
   async remove(id: string): Promise<OperatorLimitsEntity | null> {
     const data = await this.operatorLimitModel.findByIdAndUpdate(
       id,

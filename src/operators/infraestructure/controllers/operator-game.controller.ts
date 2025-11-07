@@ -94,11 +94,15 @@ export class OperatorGameController implements OnModuleInit {
         }
 
         case OperatorGameRpcChannelsEnum.UPDATE_BY_OPERATOR_GAME: {
-          //   const resp = await this.operatorGameUseCases.findOneBy({ operator: data.operator, game: data.game });
-          //    await this.redisPub.publish(
-          //         replyChannel,
-          //         JSON.stringify({ correlationId, data: resp }),
-          //       );
+          const { operator, game, ...rest } = data;
+          const resp = await this.operatorGameUseCases.updateOne(
+            { operator, game },
+            rest,
+          );
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
           break;
         }
 

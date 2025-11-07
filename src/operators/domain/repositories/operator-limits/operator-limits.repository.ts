@@ -25,5 +25,9 @@ export abstract class OperatorLimitsRepository {
     id: string,
     data: Partial<OperatorLimitsEntity>,
   ): Promise<OperatorLimitsEntity | null>;
+  abstract updateOne(
+    filter: Record<string, any>,
+    data: Partial<OperatorLimitsEntity>,
+  ): Promise<OperatorLimitsEntity | null>;
   abstract remove(id: string): Promise<OperatorLimitsEntity | null>;
 }

@@ -62,6 +62,13 @@ export class OperatorGameUseCases {
     return data;
   };
 
+  public updateOne = async (
+    filter: Record<string, any>,
+    data: Partial<OperatorGameEntity>,
+  ) => {
+    return await this.operatorGameRepository.updateOne(filter, data);
+  };
+
   public remove = async (id: string) => {
     const data = await this.operatorGameRepository.remove(id);
     return data;

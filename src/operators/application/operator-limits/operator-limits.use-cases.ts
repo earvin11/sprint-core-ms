@@ -69,6 +69,13 @@ export class OperatorLimitsUseCases {
     return data;
   };
 
+  public updateOne = async (
+    filter: Record<string, any>,
+    data: Partial<OperatorLimitsEntity>,
+  ) => {
+    return await this.operatorlimitsRepository.updateOne(filter, data);
+  };
+
   public remove = async (id: string) => {
     const data = await this.operatorlimitsRepository.remove(id);
     return data;

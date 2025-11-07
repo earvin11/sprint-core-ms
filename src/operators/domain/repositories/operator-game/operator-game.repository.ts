@@ -23,5 +23,9 @@ export abstract class OperatorGameRepository {
     id: string,
     data: Partial<OperatorGameEntity>,
   ): Promise<OperatorGameEntity | null>;
+  abstract updateOne(
+    filter: Record<string, any>,
+    data: Partial<OperatorGameEntity>,
+  );
   abstract remove(id: string): Promise<OperatorGameEntity | null>;
 }
