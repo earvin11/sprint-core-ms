@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { OperatorRouletteEntity } from 'src/operators/domain/entities/operator-game/operator-game-roulette.entity';
 import { OperatorLimitsWheelEntity } from 'src/operators/domain/entities/operator-limits/operator-limits-wheel.entity';
+import { OperatorLimitsWheel } from 'src/operators/domain/implementations/operator-limits/operator-limits-wheel.value';
 import { OperatorLimitsWheelRepository } from 'src/operators/domain/repositories/operator-limits/operator-limits-wheel.repository';
-import { OperatorLimitsWheel } from 'src/operators/infraestructure/models/operator-limits/operator-limits-wheel.model';
 
 @Injectable()
 export class OperatorLimitsWheelUseCases {

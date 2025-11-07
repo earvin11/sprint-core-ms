@@ -13,7 +13,7 @@ export class OperatorLimitsWheel implements OperatorLimitsWheelEntity {
   public minBet: number;
   public maxBet: number;
   public maxBetPosition: number;
-  public uuid: string;
+  public uuid?: string;
 
   constructor(data: OperatorLimitsWheel) {
     this.currency = data.currency;

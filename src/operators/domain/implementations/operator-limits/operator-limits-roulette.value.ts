@@ -24,7 +24,7 @@ export class OperatorLimitsRoulette implements OperatorLimitsRouletteEntity {
   public minBet: number;
   public maxBet: number;
   public maxBetPosition: number;
-  public uuid: string;
+  public uuid?: string;
 
   constructor(data: OperatorLimitsRoulette) {
     this.calle = data.calle;

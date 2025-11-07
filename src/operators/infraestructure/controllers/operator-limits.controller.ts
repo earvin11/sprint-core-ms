@@ -21,7 +21,6 @@ export class OperatorLimitsController implements OnModuleInit {
     private readonly loggerPort: LoggerPort,
   ) {}
   onModuleInit() {
-    //TODO: separar channels
     this.redisSub
       .subscribe(...operatorLimitsRpcChannels, () => {
         this.loggerPort.log(`Escuchando: ${operatorLimitsRpcChannels}`);
@@ -75,6 +74,7 @@ export class OperatorLimitsController implements OnModuleInit {
           break;
         }
         case OperatorLimitsRpcChannelsEnum.FIND_BY_OPERATOR: {
+          console.log({ channel });
           const resp = await this.operatorLimitsUseCases.findManyBy(
             {
               operator: data.operator,
