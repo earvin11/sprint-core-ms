@@ -83,6 +83,14 @@ export class OperatorWheelMongoRepository implements OperatorWheelRepository {
     );
     return data;
   }
+  async updateOne(
+    filter: Record<string, any>,
+    data: Partial<OperatorWheelEntity>,
+  ): Promise<OperatorWheelEntity | null> {
+    return await this.operatorWheelModel.findOneAndUpdate(filter, data, {
+      new: true,
+    });
+  }
   async remove(id: string): Promise<OperatorWheelEntity | null> {
     const data = await this.operatorWheelModel.findByIdAndUpdate(
       id,

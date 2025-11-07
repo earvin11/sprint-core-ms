@@ -66,6 +66,13 @@ export class OperatorWheelUseCases {
     return data;
   };
 
+  public updateOne = async (
+    filter: Record<string, any>,
+    data: Partial<OperatorRouletteEntity>,
+  ) => {
+    return await this.operatorWheelRepository.updateOne(filter, data);
+  };
+
   public remove = async (id: string) => {
     const data = await this.operatorWheelRepository.remove(id);
     return data;

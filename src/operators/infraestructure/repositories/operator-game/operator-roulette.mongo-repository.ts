@@ -87,6 +87,14 @@ export class OperatorRouletteMongoRepository
     );
     return data;
   }
+  async updateOne(
+    filter: Record<string, any>,
+    data: Partial<OperatorRouletteEntity>,
+  ): Promise<OperatorRouletteEntity | null> {
+    return await this.operatorRouletteModel.findOneAndUpdate(filter, data, {
+      new: true,
+    });
+  }
   async remove(id: string): Promise<OperatorRouletteEntity | null> {
     const data = await this.operatorRouletteModel.findByIdAndUpdate(
       id,
