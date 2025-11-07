@@ -36,25 +36,23 @@ export class OperatorLimitsController implements OnModuleInit {
 
       switch (channel) {
         case OperatorLimitsRpcChannelsEnum.CREATE: {
+          let resp;
           switch (data.typeGame) {
             case GameTypes.ROULETTE: {
-              const resp =
-                await this.operatorLimitsRouletteUseCases.create(data);
-              await this.redisPub.publish(
-                replyChannel,
-                JSON.stringify({ correlationId, data: resp }),
-              );
+              resp = await this.operatorLimitsRouletteUseCases.create(data);
+
               break;
             }
             case GameTypes.WHEEL: {
-              const resp = await this.operatorLimitsWheelUseCases.create(data);
-              await this.redisPub.publish(
-                replyChannel,
-                JSON.stringify({ correlationId, data: resp }),
-              );
+              resp = await this.operatorLimitsWheelUseCases.create(data);
+
               break;
             }
           }
+          await this.redisPub.publish(
+            replyChannel,
+            JSON.stringify({ correlationId, data: resp }),
+          );
           break;
         }
         case OperatorLimitsRpcChannelsEnum.FIND_ALL: {
@@ -100,11 +98,25 @@ export class OperatorLimitsController implements OnModuleInit {
           break;
         }
         case OperatorLimitsRpcChannelsEnum.UPDATE_BY_OPERATOR_CURRENCY: {
-          const { operator, currency, ...rest } = data;
-          const resp = await this.operatorLimitsUseCases.updateOne(
-            { operator, currency },
-            rest,
-          );
+          const { operator, currency, typeGame, ...rest } = data;
+          let resp;
+          switch (data.typeGame) {
+            case GameTypes.ROULETTE: {
+              resp = await this.operatorLimitsRouletteUseCases.updateOne(
+                { operator, currency, typeGame },
+                { ...rest },
+              );
+
+              break;
+            }
+            case GameTypes.WHEEL: {
+              resp = await this.operatorLimitsWheelUseCases.updateOne(
+                { operator, currency, typeGame },
+                { ...rest },
+              );
+              break;
+            }
+          }
           await this.redisPub.publish(
             replyChannel,
             JSON.stringify({ correlationId, data: resp }),

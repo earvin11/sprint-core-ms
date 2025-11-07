@@ -84,6 +84,19 @@ export class OperatorLimitsRouletteMongoRepository
     );
     return data;
   }
+  async updateOne(
+    filter: Record<string, any>,
+    data: Partial<OperatorLimitsRouletteEntity>,
+  ): Promise<OperatorLimitsRouletteEntity | null> {
+    const resp = await this.operatorLimitRoulette.findOneAndUpdate(
+      filter,
+      data,
+      {
+        new: true,
+      },
+    );
+    return resp;
+  }
   async remove(id: string): Promise<OperatorLimitsRouletteEntity | null> {
     const data = await this.operatorLimitRoulette.findByIdAndUpdate(
       id,

@@ -70,6 +70,13 @@ export class OperatorLimitsRouletteUseCases {
     return data;
   };
 
+  public updateOne = async (
+    filter: Record<string, any>,
+    data: Partial<OperatorLimitsRouletteEntity>,
+  ) => {
+    return await this.operatorlimitsRouletteRepository.updateOne(filter, data);
+  };
+
   public remove = async (id: string) => {
     const data = await this.operatorlimitsRouletteRepository.remove(id);
     return data;

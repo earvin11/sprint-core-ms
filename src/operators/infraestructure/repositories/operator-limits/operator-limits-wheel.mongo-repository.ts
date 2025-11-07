@@ -84,6 +84,15 @@ export class OperatorLimitsWheelMongoRepository
     );
     return data;
   }
+  async updateOne(
+    filter: Record<string, any>,
+    data: Partial<OperatorLimitsWheelEntity>,
+  ): Promise<OperatorLimitsWheelEntity | null> {
+    const resp = await this.operatorLimitWheel.findOneAndUpdate(filter, data, {
+      new: true,
+    });
+    return resp;
+  }
   async remove(id: string): Promise<OperatorLimitsWheelEntity | null> {
     const data = await this.operatorLimitWheel.findByIdAndUpdate(
       id,

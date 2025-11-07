@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { OperatorRouletteEntity } from 'src/operators/domain/entities/operator-game/operator-game-roulette.entity';
 import { OperatorLimitsWheelEntity } from 'src/operators/domain/entities/operator-limits/operator-limits-wheel.entity';
 import { OperatorLimitsWheel } from 'src/operators/domain/implementations/operator-limits/operator-limits-wheel.value';
 import { OperatorLimitsWheelRepository } from 'src/operators/domain/repositories/operator-limits/operator-limits-wheel.repository';
@@ -67,6 +66,13 @@ export class OperatorLimitsWheelUseCases {
       dataToUpdate,
     );
     return data;
+  };
+
+  public updateOne = async (
+    filter: Record<string, any>,
+    data: Partial<OperatorLimitsWheelEntity>,
+  ) => {
+    return await this.operatorLimitsWheelRepository.updateOne(filter, data);
   };
 
   public remove = async (id: string) => {
