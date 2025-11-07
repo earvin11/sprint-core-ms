@@ -9,7 +9,6 @@ export class RouletteUseCases {
 
   public create = async (data: RouletteEntity) => {
     const newData = new Roulette(data);
-    console.log({ newData });
     return await this.rouletteRepository.create(newData);
   };
 
