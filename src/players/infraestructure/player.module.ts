@@ -6,6 +6,7 @@ import { PlayerUseCases } from '../application/player.use-cases';
 import { PlayerRepository } from '../domain/repositories/player.repository';
 import { LoggerModule } from 'src/logging/infraestructure/logger.module';
 import { RedisModule } from 'src/redis/infraestructure/redis.module';
+import { PlayerController } from './controllers/player.controller';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { RedisModule } from 'src/redis/infraestructure/redis.module';
       useExisting: PlayerMongoRepository,
     },
   ],
+  controllers: [PlayerController],
   exports: [PlayerUseCases],
 })
 export class PlayerModule {}
