@@ -1,5 +1,4 @@
 export interface OperatorChipEntity {
-  _id?: string;
   operator: string;
   currency: string;
   number: string;

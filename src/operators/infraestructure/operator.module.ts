@@ -43,6 +43,14 @@ import { OperatorLimitsRepository } from '../domain/repositories/operator-limits
 import { OperatorGameRepository } from '../domain/repositories/operator-game/operator-game.repository';
 import { OperatorGameMongoRepository } from './repositories/operator-game/operator-game.mongo-repository';
 import { OperatorGameUseCases } from '../application/operator-game/operator-game.use-cases';
+import { OperatorChipUseCases } from '../application/operator-chip.use-cases';
+import { OperatorCurrencyUseCases } from '../application/operator-currency.use-cases';
+import { OperatorChipMongoRepository } from './repositories/operator-chip.mongo-repository';
+import { OperatorChip, OperatorChipSchema } from './models/operator-chip.model';
+import { OperatorChipRepository } from '../domain/repositories/operator-chip.repository';
+import { OperatorCurrencyMongoRepository } from './repositories/operator-currency.mongo-repository';
+import { OperatorCurrency } from './models/operator-currency.model';
+import { OperatorCurrencyRepository } from '../domain/repositories/operator-currency.repository';
 
 @Module({
   imports: [
@@ -50,6 +58,14 @@ import { OperatorGameUseCases } from '../application/operator-game/operator-game
       {
         name: Operator.name,
         schema: OperatorSchema,
+      },
+      {
+        name: OperatorChip.name,
+        schema: OperatorChipSchema,
+      },
+      {
+        name: OperatorCurrency.name,
+        schema: OperatorChipSchema,
       },
       {
         name: OperatorGame.name,
@@ -85,6 +101,8 @@ import { OperatorGameUseCases } from '../application/operator-game/operator-game
   providers: [
     // Repositories
     OperatorMongoRepository,
+    OperatorChipMongoRepository,
+    OperatorCurrencyMongoRepository,
     OperatorGameMongoRepository,
     OperatorRouletteMongoRepository,
     OperatorWheelMongoRepository,
@@ -93,6 +111,8 @@ import { OperatorGameUseCases } from '../application/operator-game/operator-game
     OperatorLimitsWheelMongoRepository,
     //Use cases
     OperatorUseCases,
+    OperatorChipUseCases,
+    OperatorCurrencyUseCases,
     OperatorGameUseCases,
     OperatorRouletteUseCases,
     OperatorWheelUseCases,
@@ -103,6 +123,14 @@ import { OperatorGameUseCases } from '../application/operator-game/operator-game
     {
       provide: OperatorRepository,
       useExisting: OperatorMongoRepository,
+    },
+    {
+      provide: OperatorChipRepository,
+      useExisting: OperatorChipMongoRepository,
+    },
+    {
+      provide: OperatorCurrencyRepository,
+      useExisting: OperatorCurrencyMongoRepository,
     },
     {
       provide: OperatorGameRepository,
@@ -133,6 +161,13 @@ import { OperatorGameUseCases } from '../application/operator-game/operator-game
     OperatorController,
     OperatorGameController,
     OperatorLimitsController,
+  ],
+  exports: [
+    OperatorUseCases,
+    OperatorGameUseCases,
+    OperatorLimitsUseCases,
+    OperatorChipUseCases,
+    OperatorCurrencyUseCases,
   ],
 })
 export class OperatorModule {}

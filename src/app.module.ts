@@ -9,6 +9,7 @@ import { CurrencyModule } from './currencies/infraestructure/currency.module';
 import { CrupierModule } from './crupiers/infraestructure/crupier.module';
 import { OperatorModule } from './operators/infraestructure/operator.module';
 import { GameModule } from './games/infraestructure/game.module';
+import { PlayerModule } from './players/infraestructure/player.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { GameModule } from './games/infraestructure/game.module';
     CurrencyModule,
     GameModule,
     OperatorModule,
+    PlayerModule,
     RedisModule,
   ],
   controllers: [AppController],

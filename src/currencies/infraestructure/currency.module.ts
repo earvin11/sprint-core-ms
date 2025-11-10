@@ -28,5 +28,6 @@ import { CurrencyUseCases } from '../application/currency.use-cases';
     },
   ],
   controllers: [CurrencyController],
+  exports: [CurrencyUseCases, CurrencyRepository],
 })
 export class CurrencyModule {}
