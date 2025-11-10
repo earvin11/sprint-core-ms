@@ -9,7 +9,7 @@ export class Wheel implements WheelEntity {
   public maxBetFigures?: number | undefined;
   public timeOne?: number | undefined;
   public timeTwo?: number | undefined;
-  public timeTrhee?: number | undefined;
+  public timeThree?: number | undefined;
   public percentReturnToPlayer?: number | undefined;
   public type: GameTypes;
   public name: string;
@@ -26,7 +26,7 @@ export class Wheel implements WheelEntity {
     this.maxBetFigures = data.maxBetFigures;
     this.timeOne = data.timeOne;
     this.timeTwo = data.timeTwo;
-    this.timeTrhee = data.timeTrhee;
+    this.timeThree = data.timeThree;
     this.percentReturnToPlayer = data.percentReturnToPlayer;
     this.type = data.type;
     this.name = data.name;

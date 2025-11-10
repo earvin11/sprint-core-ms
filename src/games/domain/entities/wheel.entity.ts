@@ -7,6 +7,6 @@ export interface WheelEntity extends GameEntity {
   maxBetFigures?: number;
   timeOne?: number;
   timeTwo?: number;
-  timeTrhee?: number;
+  timeThree?: number;
   percentReturnToPlayer?: number;
 }
