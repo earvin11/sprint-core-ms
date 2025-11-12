@@ -10,6 +10,7 @@ import { CrupierModule } from './crupiers/infraestructure/crupier.module';
 import { OperatorModule } from './operators/infraestructure/operator.module';
 import { GameModule } from './games/infraestructure/game.module';
 import { PlayerModule } from './players/infraestructure/player.module';
+import { LaunchModule } from './launch/infraestructure/launch.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { PlayerModule } from './players/infraestructure/player.module';
     GameModule,
     OperatorModule,
     PlayerModule,
+    LaunchModule,
     RedisModule,
   ],
   controllers: [AppController],

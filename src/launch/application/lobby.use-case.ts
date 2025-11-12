@@ -6,16 +6,18 @@ import { OperatorLimitsUseCases } from 'src/operators/application/operator-limit
 import { OperatorChipUseCases } from 'src/operators/application/operator-chip.use-cases';
 import { OperatorCurrencyUseCases } from 'src/operators/application/operator-currency.use-cases';
 import { OperatorGameEntity } from 'src/operators/domain/entities/operator-game/operator-game.entity';
+import { PlayerUseCases } from 'src/players/application/player.use-cases';
+import { PlayerEntity } from 'src/players/domain/entities/player.entity';
 
 export interface LobbyRequestInterface {
   token: string;
   operatorId: string;
-  language: string;
   casinoToken: string;
+  language: string;
   currency: string;
 }
 @Injectable()
-export class LobbyUseCase {
+export class LobbyUseCases {
   constructor(
     private readonly clientUseCases: ClientUseCases,
     private readonly operatorUseCases: OperatorUseCases,
@@ -23,6 +25,7 @@ export class LobbyUseCase {
     private readonly operatorCurrencyUseCases: OperatorCurrencyUseCases,
     private readonly operatorGameUseCases: OperatorGameUseCases,
     private readonly operatorLimitsUseCases: OperatorLimitsUseCases,
+    private readonly playerUseCases: PlayerUseCases,
   ) {}
 
   async run(input: LobbyRequestInterface) {
@@ -40,6 +43,26 @@ export class LobbyUseCase {
     if (client.token !== casinoToken)
       return { error: true, message: 'Casino token invalid' };
 
+    // to do :this.authEndpoint(endpointAuth, token), { operatorId });
+    const playerWallet = {
+      userId: 'asdasdassa',
+      ok: true,
+      msg: 'ok',
+      username: 'player1',
+      lastBalance: '1000',
+      tokenWallet: 'tokenWalletExample',
+      WL: 'WLExample',
+    };
+
+    // this.logger.info('playerWallet', { playerWallet, operatorId });
+    // Si el endpoint no responde correctamente
+    if (!playerWallet.ok)
+      return {
+        ok: playerWallet.ok,
+        msg: playerWallet.msg ? playerWallet.msg : 'Error player in wallet',
+        status: 400,
+      };
+
     const gamesInOperator = await this.operatorGameUseCases.findManyBy({
       operator,
     });
@@ -50,8 +73,71 @@ export class LobbyUseCase {
       }
     });
 
+    let player: PlayerEntity | null;
+
+    player = await this.playerUseCases.findOneBy({
+      operator: operatorId,
+      userId: playerWallet.userId,
+    });
+
+    if (player) {
+      // await updatePlayerQueue.add(QueueName.UPDATE_PLAYER, {
+      //   player,
+      //   operator,
+      //   playerWallet,
+      //   currency,
+      // });
+    } else if (!player) {
+      player = await this.playerUseCases.create({
+        userId: String(playerWallet.userId),
+        username: playerWallet.username,
+        lastBalance: playerWallet.lastBalance,
+        operator: operator._id!,
+        tokenWallet: playerWallet.tokenWallet,
+        WL: playerWallet.WL,
+        currency: currency._id!,
+      });
+
+      await this.playerRediUseCases.setPlayerSession(
+        player,
+        playerWallet.username,
+        operator._id!,
+      );
+    }
+
+    if (!player.status) throw new ResourceBlockedException('Player');
+
     return {
       games,
     };
   }
+
+  // private verifyOperatorAndClient = async (
+  //   operatorId: string,
+  //   casinoToken: string,
+  // ) => {
+  //   const operator = await getEntityFromRedisOrDb(
+  //     () => this.operatorRedisUseCases.getById(operatorId),
+  //     () => this.operatorUseCases.findById(operatorId),
+  //     (operatorDb) => this.operatorRedisUseCases.setOperator(operatorDb),
+  //   );
+
+  //   if (!operator) throw new NotFoundException('Operator');
+  //   if (!operator.status) throw new ResourceDisabledException('Operator');
+  //   if (!operator.available) throw new ResourceBlockedException('Operator');
+
+  //   const client = await getEntityFromRedisOrDb(
+  //     () => this.clientRedisUseCases.getById(operator.client),
+  //     () => this.clientUseCases.findById(operator.client),
+  //     (clientDb) => this.clientRedisUseCases.setClient(clientDb),
+  //   );
+
+  //   if (!client) throw new NotFoundException('Client');
+  //   if (!client.status) throw new ResourceDisabledException('Client');
+  //   if (!client.available) throw new ResourceBlockedException('Client');
+  //   if (client.token !== casinoToken)
+  //     throw new Exception(CLIENT_ERRORS.CASINO_TOKEN_INVALID.msg, 401);
+
+  //   return { operator, client };
+  // };
 }
