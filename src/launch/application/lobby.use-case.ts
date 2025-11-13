@@ -32,7 +32,7 @@ export class LobbyUseCases {
   ) {}
 
   async run(input: LobbyRequestInterface) {
-    const { operatorId, casinoToken, currency, token } = input;
+    const { operatorId, casinoToken, currency, token, language } = input;
     console.log('input lobby use case', input);
     const operator: any = await this.operatorUseCases.findById(operatorId);
     if (!operator) return { error: true, message: 'Operator not found' };
@@ -62,7 +62,7 @@ export class LobbyUseCases {
       operator.endpointAuth,
       { token },
     );
-    console.log('playerWallet', playerWallet);
+    console.log('playerWalletx', playerWallet.data);
     // const playerWallet = {
     //   userId: 'asdasdassa',
     //   ok: true,
@@ -75,16 +75,20 @@ export class LobbyUseCases {
 
     // this.logger.info('playerWallet', { playerWallet, operatorId });
     // Si el endpoint no responde correctamente
-    if (!playerWallet.ok)
+    if (!playerWallet.data.ok)
       return {
-        ok: playerWallet.ok,
-        msg: playerWallet.msg ? playerWallet.msg : 'Error player in wallet',
+        ok: playerWallet.data.ok,
+        msg: playerWallet.data.msg
+          ? playerWallet.data.msg
+          : 'Error player in wallet',
         status: 400,
       };
 
     const gamesInOperator = await this.operatorGameUseCases.findManyBy({
-      operator,
+      operator: operatorId,
     });
+    console.log('gamesInOperator', gamesInOperator);
+
     //TODO:
     const games = gamesInOperator.map((operatorGame: OperatorGameEntity) => {
       if (operatorGame.currencies.includes(currency)) {
@@ -93,7 +97,6 @@ export class LobbyUseCases {
     });
     console.log('games', games);
 
-    return
     let player: any | null;
 
     player = await this.playerUseCases.findOneBy({
@@ -152,12 +155,7 @@ export class LobbyUseCases {
       loaderLogo,
     } = operator;
 
-    const operatorGames = await this.operatorGameUseCases.findManyBy({
-      operator: operatorId,
-      // todo: add filter
-    });
-
-    const queries = operatorGames.map(async (data: any) => {
+    const queries = gamesInOperator.map(async (data: any) => {
       const limitsCurrencies = this.operatorLimitsUseCases.findOneBy({
         operator: data.operator,
         currency: currencyData._id,
@@ -167,9 +165,29 @@ export class LobbyUseCases {
     });
 
     const limits = await Promise.all(queries);
+    console.log('limits', limits);
 
+    const casinosData = [...games];
     return {
-      games,
+      ok: true,
+      status: 200,
+      msg: 'Lobby OK',
+      OperatorId: operatorId,
+      NameOperator: operator.name,
+      language,
+      currency,
+      // casinos: casinosData.sort((a, b) => a?.order - b?.order),
+      casinos: casinosData,
+      player,
+      //TODO: revisar limits y no enviar
+      limits,
+      useLogo,
+      logo: useLogo ? logo : '',
+      loaderLogo: useLogo ? loaderLogo : '',
+      background,
+      cruppierLogo,
+      primaryColor,
+      secondaryColor,
     };
   }
 

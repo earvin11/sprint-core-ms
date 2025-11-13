@@ -28,8 +28,8 @@ import { WalletAuthMock } from './implementations/mock/wallet-auth.mock';
     WalletAuth,
     {
       provide: WalletAuthPort,
-      // useExisting: WalletAuth,
-      useExisting: WalletAuthMock,
+      useExisting: WalletAuth,
+      // useExisting: WalletAuthMock,
     },
   ],
   controllers: [LaunchController],
