@@ -8,19 +8,8 @@ import { QueuesPort } from '../domain/queues.port';
 import { BullModule } from '@nestjs/bullmq';
 import { QueueName } from 'src/shared/enums/queue-names.enum';
 import { LoggerModule } from 'src/logging/infraestructure/logger.module';
-
-export const REDIS_CLIENT = 'REDIS_CLIENT';
-
-const redisProvider: Provider = {
-  provide: REDIS_CLIENT,
-  useFactory: () => {
-    return new Redis({
-      host: envs.redisHost,
-      port: envs.redisPort,
-      password: envs.redisPassword,
-    });
-  },
-};
+import { RedisStoreService } from './implementations/redis-store.service';
+import { RedisStorePort } from '../domain/redis-store.port';
 
 @Module({
   imports: [
@@ -44,6 +33,16 @@ const redisProvider: Provider = {
   ],
   providers: [
     {
+      provide: 'REDIS_CLIENT',
+      useFactory: () => {
+        return new Redis({
+          host: envs.redisHost,
+          port: envs.redisPort,
+          password: envs.redisPassword,
+        });
+      },
+    },
+    {
       provide: 'REDIS_PUBLISHER',
       useFactory: () => {
         return new Redis({
@@ -63,9 +62,9 @@ const redisProvider: Provider = {
         });
       },
     },
-    redisProvider,
     QueueService,
     RedisRpcService,
+    RedisStoreService,
     {
       provide: RedisRpcPort,
       useExisting: RedisRpcService,
@@ -74,11 +73,15 @@ const redisProvider: Provider = {
       provide: QueuesPort,
       useExisting: QueueService,
     },
+    {
+      provide: RedisStorePort,
+      useExisting: RedisStoreService,
+    },
   ],
   exports: [
     'REDIS_PUBLISHER',
     'REDIS_SUBSCRIBER',
-    redisProvider,
+    'REDIS_CLIENT',
     RedisRpcPort,
     QueuesPort,
   ],
