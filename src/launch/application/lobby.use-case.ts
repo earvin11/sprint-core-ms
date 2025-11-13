@@ -7,8 +7,8 @@ import { OperatorChipUseCases } from 'src/operators/application/operator-chip.us
 import { OperatorCurrencyUseCases } from 'src/operators/application/operator-currency.use-cases';
 import { OperatorGameEntity } from 'src/operators/domain/entities/operator-game/operator-game.entity';
 import { PlayerUseCases } from 'src/players/application/player.use-cases';
-import { PlayerEntity } from 'src/players/domain/entities/player.entity';
 import { CurrencyUseCases } from 'src/currencies/application/currency.use-cases';
+import { WalletAuthPort } from '../domain/wallet-debit.port';
 
 export interface LobbyRequestInterface {
   token: string;
@@ -28,11 +28,12 @@ export class LobbyUseCases {
     private readonly operatorLimitsUseCases: OperatorLimitsUseCases,
     private readonly playerUseCases: PlayerUseCases,
     private readonly currencyUseCases: CurrencyUseCases,
+    private readonly walletAuthPort: WalletAuthPort,
   ) {}
 
   async run(input: LobbyRequestInterface) {
-    const { operatorId, casinoToken, currency } = input;
-
+    const { operatorId, casinoToken, currency, token } = input;
+    console.log('input lobby use case', input);
     const operator: any = await this.operatorUseCases.findById(operatorId);
     if (!operator) return { error: true, message: 'Operator not found' };
     if (!operator.status || !operator.available)
@@ -57,16 +58,20 @@ export class LobbyUseCases {
       };
     }
 
-    // to do :this.authEndpoint(endpointAuth, token), { operatorId });
-    const playerWallet = {
-      userId: 'asdasdassa',
-      ok: true,
-      msg: 'ok',
-      username: 'player1',
-      lastBalance: '1000',
-      tokenWallet: 'tokenWalletExample',
-      WL: 'WLExample',
-    };
+    const playerWallet = await this.walletAuthPort.sendAuth(
+      operator.endpointAuth,
+      { token },
+    );
+    console.log('playerWallet', playerWallet);
+    // const playerWallet = {
+    //   userId: 'asdasdassa',
+    //   ok: true,
+    //   msg: 'ok',
+    //   username: 'player1',
+    //   lastBalance: '1000',
+    //   tokenWallet: 'zgp0wPDE33clbLPDL3Mgij8YDlaLRJt4yqNogxRpHZJG0W',
+    //   WL: 'WLExample',
+    // };
 
     // this.logger.info('playerWallet', { playerWallet, operatorId });
     // Si el endpoint no responde correctamente
@@ -86,7 +91,9 @@ export class LobbyUseCases {
         return operatorGame;
       }
     });
+    console.log('games', games);
 
+    return
     let player: any | null;
 
     player = await this.playerUseCases.findOneBy({
