@@ -8,6 +8,7 @@ import { OperatorCurrencyUseCases } from 'src/operators/application/operator-cur
 import { OperatorGameEntity } from 'src/operators/domain/entities/operator-game/operator-game.entity';
 import { PlayerUseCases } from 'src/players/application/player.use-cases';
 import { PlayerEntity } from 'src/players/domain/entities/player.entity';
+import { CurrencyUseCases } from 'src/currencies/application/currency.use-cases';
 
 export interface LobbyRequestInterface {
   token: string;
@@ -26,12 +27,13 @@ export class LobbyUseCases {
     private readonly operatorGameUseCases: OperatorGameUseCases,
     private readonly operatorLimitsUseCases: OperatorLimitsUseCases,
     private readonly playerUseCases: PlayerUseCases,
+    private readonly currencyUseCases: CurrencyUseCases,
   ) {}
 
   async run(input: LobbyRequestInterface) {
     const { operatorId, casinoToken, currency } = input;
 
-    const operator = await this.operatorUseCases.findById(operatorId);
+    const operator: any = await this.operatorUseCases.findById(operatorId);
     if (!operator) return { error: true, message: 'Operator not found' };
     if (!operator.status || !operator.available)
       return { error: true, message: 'Operator block' };
@@ -42,6 +44,18 @@ export class LobbyUseCases {
       return { error: true, message: 'Client block or disabled' };
     if (client.token !== casinoToken)
       return { error: true, message: 'Casino token invalid' };
+
+    const currencyData: any = await this.currencyUseCases.findOneBy({
+      short: currency,
+    });
+
+    if (!currencyData) {
+      return {
+        ok: false,
+        msg: 'Currency not found',
+        status: 404,
+      };
+    }
 
     // to do :this.authEndpoint(endpointAuth, token), { operatorId });
     const playerWallet = {
@@ -73,7 +87,7 @@ export class LobbyUseCases {
       }
     });
 
-    let player: PlayerEntity | null;
+    let player: any | null;
 
     player = await this.playerUseCases.findOneBy({
       operator: operatorId,
@@ -87,6 +101,15 @@ export class LobbyUseCases {
       //   playerWallet,
       //   currency,
       // });
+      await this.playerUseCases.update(player._id!, {
+        userId: String(playerWallet.userId),
+        lastBalance: playerWallet.lastBalance,
+        operator: operator._id,
+        // operatorUuid: operator.uuid,
+        tokenWallet: playerWallet.tokenWallet,
+        WL: playerWallet.WL,
+        currency: currencyData._id!,
+      });
     } else if (!player) {
       player = await this.playerUseCases.create({
         userId: String(playerWallet.userId),
@@ -95,17 +118,48 @@ export class LobbyUseCases {
         operator: operator._id!,
         tokenWallet: playerWallet.tokenWallet,
         WL: playerWallet.WL,
-        currency: currency._id!,
+        currency: currencyData._id!,
       });
 
-      await this.playerRediUseCases.setPlayerSession(
-        player,
-        playerWallet.username,
-        operator._id!,
-      );
+      // await this.playerRediUseCases.setPlayerSession(
+      //   player,
+      //   playerWallet.username,
+      //   operator._id!,
+      // );
     }
 
-    if (!player.status) throw new ResourceBlockedException('Player');
+    if (!player.status)
+      return {
+        ok: false,
+        msg: 'Player disabled, talk to administrator',
+        status: 401,
+      };
+
+    const {
+      background,
+      logo,
+      cruppierLogo,
+      primaryColor,
+      useLogo,
+      secondaryColor,
+      loaderLogo,
+    } = operator;
+
+    const operatorGames = await this.operatorGameUseCases.findManyBy({
+      operator: operatorId,
+      // todo: add filter
+    });
+
+    const queries = operatorGames.map(async (data: any) => {
+      const limitsCurrencies = this.operatorLimitsUseCases.findOneBy({
+        operator: data.operator,
+        currency: currencyData._id,
+        // roulette: data.roulette
+      });
+      return limitsCurrencies;
+    });
+
+    const limits = await Promise.all(queries);
 
     return {
       games,
