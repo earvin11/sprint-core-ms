@@ -1,7 +1,7 @@
 import {
   AuthWalletRequest,
   WalletAuthPort,
-} from 'src/launch/domain/wallet-debit.port';
+} from 'src/launch/domain/wallet-auth.port';
 
 export class WalletAuthMock implements WalletAuthPort {
   sendAuth(

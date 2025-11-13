@@ -8,7 +8,7 @@ import { OperatorCurrencyUseCases } from 'src/operators/application/operator-cur
 import { OperatorGameEntity } from 'src/operators/domain/entities/operator-game/operator-game.entity';
 import { PlayerUseCases } from 'src/players/application/player.use-cases';
 import { CurrencyUseCases } from 'src/currencies/application/currency.use-cases';
-import { WalletAuthPort } from '../domain/wallet-debit.port';
+import { WalletAuthPort } from '../domain/wallet-auth.port';
 
 export interface LobbyRequestInterface {
   token: string;

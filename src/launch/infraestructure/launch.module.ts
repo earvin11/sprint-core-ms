@@ -8,7 +8,7 @@ import { LaunchUseCases } from '../application/launch.use-case';
 import { LobbyUseCases } from '../application/lobby.use-case';
 import { PlayerModule } from 'src/players/infraestructure/player.module';
 import { CurrencyModule } from 'src/currencies/infraestructure/currency.module';
-import { WalletAuthPort } from '../domain/wallet-debit.port';
+import { WalletAuthPort } from '../domain/wallet-auth.port';
 import { WalletAuth } from './implementations/wallet-auth.implementation';
 import { WalletAuthMock } from './implementations/mock/wallet-auth.mock';
 

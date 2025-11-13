@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   AuthWalletRequest,
   WalletAuthPort,
-} from 'src/launch/domain/wallet-debit.port';
+} from 'src/launch/domain/wallet-auth.port';
 import { LoggerPort } from 'src/logging/domain/logger.port';
 
 @Injectable()
