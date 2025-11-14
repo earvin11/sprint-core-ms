@@ -32,7 +32,6 @@ export class LaunchController implements OnModuleInit {
       const { correlationId, data, replyChannel } = payload;
       switch (channel) {
         case LaunchpcChannelsEnum.LAUNCH: {
-          console.log('llego al launch controller');
           const resp = await this.launchUseCases.run(data);
           await this.redisPub.publish(
             replyChannel,
@@ -42,7 +41,6 @@ export class LaunchController implements OnModuleInit {
         }
 
         case LaunchpcChannelsEnum.LOBBY: {
-          console.log('llego al lobby controller');
           const resp = await this.lobbyseCases.run(data);
           await this.redisPub.publish(
             replyChannel,
