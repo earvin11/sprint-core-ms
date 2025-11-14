@@ -1,4 +1,4 @@
-import { Module, Provider } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import Redis from 'ioredis';
 import { envs } from 'src/config/envs';
 import { QueueService } from './implementations/queue.service';
