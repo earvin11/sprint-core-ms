@@ -84,6 +84,7 @@ import { RedisStorePort } from '../domain/redis-store.port';
     'REDIS_CLIENT',
     RedisRpcPort,
     QueuesPort,
+    RedisStorePort,
   ],
 })
 export class RedisModule {}

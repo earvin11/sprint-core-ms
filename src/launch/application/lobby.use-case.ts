@@ -9,6 +9,8 @@ import { OperatorGameEntity } from 'src/operators/domain/entities/operator-game/
 import { PlayerUseCases } from 'src/players/application/player.use-cases';
 import { CurrencyUseCases } from 'src/currencies/application/currency.use-cases';
 import { WalletAuthPort } from '../domain/wallet-auth.port';
+import { VerifyPlayerAndCurrencyUseCase } from './verify-player-currency.use-case';
+import { VerifyOperatorUseCase } from './verify-operator.use-case';
 
 export interface LobbyRequestInterface {
   token: string;
@@ -20,131 +22,140 @@ export interface LobbyRequestInterface {
 @Injectable()
 export class LobbyUseCases {
   constructor(
-    private readonly clientUseCases: ClientUseCases,
-    private readonly operatorUseCases: OperatorUseCases,
+    // private readonly clientUseCases: ClientUseCases,
+    // private readonly operatorUseCases: OperatorUseCases,
     private readonly operatorChipUseCases: OperatorChipUseCases,
     private readonly operatorCurrencyUseCases: OperatorCurrencyUseCases,
     private readonly operatorGameUseCases: OperatorGameUseCases,
     private readonly operatorLimitsUseCases: OperatorLimitsUseCases,
-    private readonly playerUseCases: PlayerUseCases,
-    private readonly currencyUseCases: CurrencyUseCases,
-    private readonly walletAuthPort: WalletAuthPort,
+    private readonly verifyPlayerCurrencyUseCase: VerifyPlayerAndCurrencyUseCase,
+    private readonly verifyOperatorUseCase: VerifyOperatorUseCase,
+    // private readonly playerUseCases: PlayerUseCases,
+    // private readonly currencyUseCases: CurrencyUseCases,
+    // private readonly walletAuthPort: WalletAuthPort,
   ) {}
 
   async run(input: LobbyRequestInterface) {
     const { operatorId, casinoToken, currency, token, language } = input;
-    console.log('input lobby use case', input);
-    const operator: any = await this.operatorUseCases.findById(operatorId);
-    if (!operator) return { error: true, message: 'Operator not found' };
-    if (!operator.status || !operator.available)
-      return { error: true, message: 'Operator block' };
+    // console.log('input lobby use case', input);
+    // const operator: any = await this.operatorUseCases.findById(operatorId);
+    // if (!operator) return { error: true, message: 'Operator not found' };
+    // if (!operator.status || !operator.available)
+    //   return { error: true, message: 'Operator block' };
 
-    const client = await this.clientUseCases.findById(operator.client);
-    if (!client) return { error: true, message: 'Client not found' };
-    if (!client.status || !client.status)
-      return { error: true, message: 'Client block or disabled' };
-    if (client.token !== casinoToken)
-      return { error: true, message: 'Casino token invalid' };
+    // const client = await this.clientUseCases.findById(operator.client);
+    // if (!client) return { error: true, message: 'Client not found' };
+    // if (!client.status || !client.status)
+    //   return { error: true, message: 'Client block or disabled' };
+    // if (client.token !== casinoToken)
+    //   return { error: true, message: 'Casino token invalid' };
 
-    const currencyData: any = await this.currencyUseCases.findOneBy({
-      short: currency,
-    });
+    // const currencyData: any = await this.currencyUseCases.findOneBy({
+    //   short: currency,
+    // });
 
-    if (!currencyData) {
-      return {
-        ok: false,
-        msg: 'Currency not found',
-        status: 404,
-      };
-    }
+    // if (!currencyData) {
+    //   return {
+    //     ok: false,
+    //     msg: 'Currency not found',
+    //     status: 404,
+    //   };
+    // }
 
-    const playerWallet = await this.walletAuthPort.sendAuth(
-      operator.endpointAuth,
-      { token },
+    // const playerWallet = await this.walletAuthPort.sendAuth(
+    //   operator.endpointAuth,
+    //   { token },
+    // );
+    // console.log('playerWalletx', playerWallet.data);
+    // // const playerWallet = {
+    // //   userId: 'asdasdassa',
+    // //   ok: true,
+    // //   msg: 'ok',
+    // //   username: 'player1',
+    // //   lastBalance: '1000',
+    // //   tokenWallet: 'zgp0wPDE33clbLPDL3Mgij8YDlaLRJt4yqNogxRpHZJG0W',
+    // //   WL: 'WLExample',
+    // // };
+
+    // // this.logger.info('playerWallet', { playerWallet, operatorId });
+    // // Si el endpoint no responde correctamente
+    // if (!playerWallet.data.ok)
+    //   return {
+    //     ok: playerWallet.data.ok,
+    //     msg: playerWallet.data.msg
+    //       ? playerWallet.data.msg
+    //       : 'Error player in wallet',
+    //     status: 400,
+    //   };
+
+    // let player: any | null;
+
+    // player = await this.playerUseCases.findOneBy({
+    //   operator: operatorId,
+    //   userId: playerWallet.userId,
+    // });
+
+    // if (player) {
+    //   // await updatePlayerQueue.add(QueueName.UPDATE_PLAYER, {
+    //   //   player,
+    //   //   operator,
+    //   //   playerWallet,
+    //   //   currency,
+    //   // });
+    //   await this.playerUseCases.update(player._id!, {
+    //     userId: String(playerWallet.userId),
+    //     lastBalance: playerWallet.lastBalance,
+    //     operator: operator._id,
+    //     // operatorUuid: operator.uuid,
+    //     tokenWallet: playerWallet.tokenWallet,
+    //     WL: playerWallet.WL,
+    //     currency: currencyData._id!,
+    //   });
+    // } else if (!player) {
+    //   player = await this.playerUseCases.create({
+    //     userId: String(playerWallet.userId),
+    //     username: playerWallet.username,
+    //     lastBalance: playerWallet.lastBalance,
+    //     operator: operator._id!,
+    //     tokenWallet: playerWallet.tokenWallet,
+    //     WL: playerWallet.WL,
+    //     currency: currencyData._id!,
+    //   });
+
+    //   // await this.playerRediUseCases.setPlayerSession(
+    //   //   player,
+    //   //   playerWallet.username,
+    //   //   operator._id!,
+    //   // );
+    // }
+
+    // if (!player.status)
+    //   return {
+    //     ok: false,
+    //     msg: 'Player disabled, talk to administrator',
+    //     status: 401,
+    //   };
+
+    const respOperator = await this.verifyOperatorUseCase.run(
+      operatorId,
+      casinoToken,
     );
-    console.log('playerWalletx', playerWallet.data);
-    // const playerWallet = {
-    //   userId: 'asdasdassa',
-    //   ok: true,
-    //   msg: 'ok',
-    //   username: 'player1',
-    //   lastBalance: '1000',
-    //   tokenWallet: 'zgp0wPDE33clbLPDL3Mgij8YDlaLRJt4yqNogxRpHZJG0W',
-    //   WL: 'WLExample',
-    // };
-
-    // this.logger.info('playerWallet', { playerWallet, operatorId });
-    // Si el endpoint no responde correctamente
-    if (!playerWallet.data.ok)
+    if (respOperator.error || !respOperator.operator || !respOperator.client)
       return {
-        ok: playerWallet.data.ok,
-        msg: playerWallet.data.msg
-          ? playerWallet.data.msg
-          : 'Error player in wallet',
-        status: 400,
+        message: respOperator.message,
+        error: true,
       };
-
-    const gamesInOperator = await this.operatorGameUseCases.findManyBy({
-      operator: operatorId,
-    });
-    console.log('gamesInOperator', gamesInOperator);
-
-    //TODO:
-    const games = gamesInOperator.map((operatorGame: OperatorGameEntity) => {
-      if (operatorGame.currencies.includes(currency)) {
-        return operatorGame;
-      }
-    });
-    console.log('games', games);
-
-    let player: any | null;
-
-    player = await this.playerUseCases.findOneBy({
-      operator: operatorId,
-      userId: playerWallet.userId,
-    });
-
-    if (player) {
-      // await updatePlayerQueue.add(QueueName.UPDATE_PLAYER, {
-      //   player,
-      //   operator,
-      //   playerWallet,
-      //   currency,
-      // });
-      await this.playerUseCases.update(player._id!, {
-        userId: String(playerWallet.userId),
-        lastBalance: playerWallet.lastBalance,
-        operator: operator._id,
-        // operatorUuid: operator.uuid,
-        tokenWallet: playerWallet.tokenWallet,
-        WL: playerWallet.WL,
-        currency: currencyData._id!,
-      });
-    } else if (!player) {
-      player = await this.playerUseCases.create({
-        userId: String(playerWallet.userId),
-        username: playerWallet.username,
-        lastBalance: playerWallet.lastBalance,
-        operator: operator._id!,
-        tokenWallet: playerWallet.tokenWallet,
-        WL: playerWallet.WL,
-        currency: currencyData._id!,
-      });
-
-      // await this.playerRediUseCases.setPlayerSession(
-      //   player,
-      //   playerWallet.username,
-      //   operator._id!,
-      // );
-    }
-
-    if (!player.status)
-      return {
-        ok: false,
-        msg: 'Player disabled, talk to administrator',
-        status: 401,
-      };
-
+    const {
+      error,
+      currency: currencyData,
+      player,
+      message,
+    } = await this.verifyPlayerCurrencyUseCase.run(
+      token,
+      operatorId,
+      respOperator.operator.endpointAuth,
+    );
+    if (error || !currencyData || !player) return { error: true, message };
     const {
       background,
       logo,
@@ -153,7 +164,18 @@ export class LobbyUseCases {
       useLogo,
       secondaryColor,
       loaderLogo,
-    } = operator;
+    } = respOperator.operator;
+
+    const gamesInOperator = await this.operatorGameUseCases.findManyBy({
+      operator: operatorId,
+    });
+
+    //TODO:
+    const games = gamesInOperator.map((operatorGame: OperatorGameEntity) => {
+      if (operatorGame.currencies.includes(currency)) {
+        return operatorGame;
+      }
+    });
 
     const queries = gamesInOperator.map(async (data: any) => {
       const limitsCurrencies = this.operatorLimitsUseCases.findOneBy({
@@ -173,7 +195,7 @@ export class LobbyUseCases {
       status: 200,
       msg: 'Lobby OK',
       OperatorId: operatorId,
-      NameOperator: operator.name,
+      NameOperator: respOperator.operator.name,
       language,
       currency,
       // casinos: casinosData.sort((a, b) => a?.order - b?.order),

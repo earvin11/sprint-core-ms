@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { PlayerEntity } from 'src/players/domain/entities/player.entity';
+// import { PlayerEntity } from 'src/players/domain/entities/player.entity';
 
 @Schema()
-export class Player extends Document implements PlayerEntity {
+export class Player extends Document {
   @Prop()
   userId: string;
   @Prop()

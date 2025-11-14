@@ -45,6 +45,6 @@ export class VerifyOperatorUseCase {
     if (client.token !== casinoToken)
       return { error: true, message: 'Casino Token invalid' };
 
-    return { operator, client };
+    return { error: false, operator, client };
   }
 }

@@ -11,6 +11,8 @@ import { CurrencyModule } from 'src/currencies/infraestructure/currency.module';
 import { WalletAuthPort } from '../domain/wallet-auth.port';
 import { WalletAuth } from './implementations/wallet-auth.implementation';
 import { WalletAuthMock } from './implementations/mock/wallet-auth.mock';
+import { VerifyPlayerAndCurrencyUseCase } from '../application/verify-player-currency.use-case';
+import { VerifyOperatorUseCase } from '../application/verify-operator.use-case';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { WalletAuthMock } from './implementations/mock/wallet-auth.mock';
     LobbyUseCases,
     WalletAuthMock,
     WalletAuth,
+    VerifyPlayerAndCurrencyUseCase,
+    VerifyOperatorUseCase,
     {
       provide: WalletAuthPort,
       useExisting: WalletAuth,
