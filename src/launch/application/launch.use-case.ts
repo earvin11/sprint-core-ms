@@ -78,55 +78,68 @@ export class LaunchUseCases {
     });
 
     const latestResults = []; //todo
-
+    console.log('game', game);
+    console.log('limits', limits);
     const limitsTable = {
       pleno: {
-        ...limits.pleno,
-        pay: game.pleno,
+        pay: game.pleno || 0,
+        min: limits.pleno?.min || 0,
+        max: limits.pleno.max || 0,
       },
       semipleno: {
-        ...limits.semipleno,
-        pay: game.semipleno,
+        pay: game.semipleno || 0,
+        min: limits.semipleno?.min || 0,
+        max: limits.semipleno?.max || 0,
       },
       cuadro: {
-        ...limits.cuadro,
-        pay: game.cuadro,
+        pay: game.cuadro || 0,
+        min: limits.cuadro?.min || 0,
+        max: limits.cuadro?.max || 0,
       },
       calle: {
-        ...limits.calle,
-        pay: game.calle,
+        pay: game.calle || 0,
+        min: limits.calle?.min || 0,
+        max: limits.calle?.max || 0,
       },
       linea: {
-        ...limits.linea,
-        pay: game.linea,
+        pay: game.linea || 0,
+        min: limits.linea?.min || 0,
+        max: limits.linea?.max || 0,
       },
       columna: {
-        ...limits.columna,
-        pay: game.columna,
+        pay: game.columna || 0,
+        min: limits.columna?.min || 0,
+        max: limits.columna?.max || 0,
       },
       docena: {
-        ...limits.docena,
-        pay: game.docena,
+        pay: game.docena || 0,
+        min: limits.docena?.min || 0,
+        max: limits.docena?.max || 0,
       },
       chanceSimple: {
-        ...limits.chanceSimple,
-        pay: game.chanceSimple,
+        pay: game.chanceSimple || 0,
+        min: limits.chanceSimple?.min || 0,
+        max: limits.chanceSimple?.max || 0,
       },
       colorBet: {
-        ...limits.color,
-        pay: game.chanceSimple,
+        pay: game.chanceSimple || 0,
+        min: limits.colorBet?.min || 0,
+        max: limits.colorBet?.max || 0,
       },
       even_odd: {
-        ...limits.even_odd,
-        pay: game.chanceSimple,
+        pay: game.chanceSimple || 0,
+        min: limits.even_odd?.min || 0,
+        max: limits.even_odd?.max || 0,
       },
       cubre: {
-        ...limits.cubre,
-        pay: game.cubre,
+        pay: game.cubre || 0,
+        min: limits.cubre?.min || 0,
+        max: limits.cubre?.max || 0,
       },
       specialCalle: {
-        ...limits.specialCalle,
-        pay: game.specialCalle || game.specialCalle,
+        pay: game.specialCalle || 0,
+        min: limits.specialCalle?.min || 0,
+        max: limits.specialCalle?.max || 0,
       },
       minBet: limits.minBet ? limits.minBet : game.minBet,
       maxBet: limits.maxBet ? limits.maxBet : game.maxBet,

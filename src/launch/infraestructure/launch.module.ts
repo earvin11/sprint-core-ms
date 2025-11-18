@@ -32,8 +32,8 @@ import { VerifyOperatorUseCase } from '../application/verify-operator.use-case';
     VerifyOperatorUseCase,
     {
       provide: WalletAuthPort,
-      useExisting: WalletAuth,
-      // useExisting: WalletAuthMock,
+      // useExisting: WalletAuth,
+      useExisting: WalletAuthMock,
     },
   ],
   controllers: [LaunchController],
